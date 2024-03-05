@@ -13,7 +13,7 @@ void waitUntilKeyPressed(){
 }
 
 int main(int arg, char* argv[]){
-
+	std::cout << "Hello world";
 
 
     return 0;
