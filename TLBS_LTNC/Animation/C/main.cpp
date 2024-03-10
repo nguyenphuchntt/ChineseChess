@@ -2,7 +2,7 @@
 #include "src/header/defs.h"
 #include "src/header/graphics.h"
 #include "src/header/function.h"
-
+#include "src/header/mouse.h"
 
 bool quit = false;
 
@@ -13,7 +13,10 @@ int main(int arg, char* argv[]){
 
     SDL_Event event;
     while (!quit){
-		graphic.prepareScene();
+        SDL_SetRenderDrawColor(graphic.renderer, 0,0,0,0);
+        SDL_RenderClear(graphic.renderer);
+
+
 
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
