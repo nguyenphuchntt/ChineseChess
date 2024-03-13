@@ -4,5 +4,6 @@
 
 #include "include.h"
 
+SDL_Texture* bird;
 
 #endif

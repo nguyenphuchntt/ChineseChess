@@ -2,13 +2,16 @@
 #include "src/header/defs.h"
 #include "src/header/graphics.h"
 #include "src/header/function.h"
-#include "src/header/mouse.h"
+
 
 bool quit = false;
 
 int main(int arg, char* argv[]){
     graphics graphic;
     graphic.initSDL();
+
+    Sprite birdClip;
+    birdClip.init(bird, BIRD_FRAMES, BIRD_CLIPS);
 
 
     SDL_Event event;
@@ -24,10 +27,11 @@ int main(int arg, char* argv[]){
             }
         }
 
+        birdClip.tick();
+        graphic.render(100, 100, birdClip);
+
         SDL_RenderPresent(graphic.renderer);
-        // SDL_Delay(100);
-
-
+        SDL_Delay(100);
     }
 
     graphic.QuitSDL();

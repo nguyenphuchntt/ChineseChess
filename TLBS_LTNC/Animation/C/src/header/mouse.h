@@ -4,6 +4,7 @@
 #include "defs.h"
 #include "graphics.h"
 
+#define INITIAL_SPEED 5;
 struct Mouse {
     int x, y;
     int dx = 0, dy = 0;

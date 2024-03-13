@@ -6,6 +6,29 @@
 #include "defs.h"
 #include "media.h"
 
+struct Sprite{
+    SDL_Texture* texture;
+    std::vector<SDL_Rect> clips; // chua toa do
+    int currentFrame = 0;
+
+    void init(SDL_Texture* _texture, int frames, const int _clips[][4]){
+        texture = _texture;
+        SDL_Rect clip;
+        for (int i = 0; i < frames; i++) {
+            clip.x = _clips[i][0];
+            clip.y = _clips[i][1];
+            clip.w = _clips[i][2];
+            clip.h = _clips[i][3];
+            clips.push_back(clip);
+        }
+    }
+    void tick(){
+        currentFrame = (currentFrame + 1) % clips.size();
+    }
+    const SDL_Rect* getCurrentClip() const {
+        return &(clips[currentFrame]);
+    }
+};
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
@@ -36,8 +59,12 @@ struct graphics{
         this->loadMedia();
     }
 
-    void loadMedia(){
+    void prepareScene(){
 
+    }
+
+    void loadMedia(){
+        bird = this->loadTexture("src/img/bird.png");
     }
 
     void freeMedia(){
@@ -76,10 +103,14 @@ struct graphics{
         
     }
 
+    void render(int x, int y, const Sprite& sprite) {
+        const SDL_Rect* clip = sprite.getCurrentClip();
+        SDL_Rect renderQuad = {x, y, clip->w, clip->h};
+        SDL_RenderCopy(renderer, sprite.texture, clip, &renderQuad);
+
+    }
+
 };
 
-struct Sprite{
-    SDL_Texture* texture;
-};
 
 #endif
