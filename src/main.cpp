@@ -1,10 +1,16 @@
-#include "../include/header/include.h"
-#include "../include/header/defs.h"
-#include "../include/header/graphics.h"
-#include "../include/header/function.h"
-#include "../include/header/chessPiece.h"
-#include "../include/header/logic.h"
+#include "../include/headers/include.h"
+#include "../include/headers/defs.h"
+#include "../include/headers/graphics.h"
+#include "../include/headers/function.h"
+#include "../include/headers/chessPiece.h"
+#include "../include/headers/logic.h"
 
+// #include "include/headers/include.h"
+// #include "include/headers/defs.h"
+// #include "include/headers/graphics.h"
+// #include "include/headers/function.h"
+// #include "include/headers/chessPiece.h"
+// #include "include/headers/logic.h"
 
 bool quit = false;
 
@@ -12,6 +18,7 @@ int main(int arg, char* argv[]){
     
     ChessPiece piece;
     piece.init();
+    piece.print();
 
     graphics graphic;
     graphic.initSDL();
@@ -20,6 +27,7 @@ int main(int arg, char* argv[]){
     SDL_Event event;
     while (!quit){
 		graphic.prepareScene();
+
 
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
@@ -32,7 +40,6 @@ int main(int arg, char* argv[]){
 
 
     }
-
     graphic.QuitSDL();
     return 0;
 }

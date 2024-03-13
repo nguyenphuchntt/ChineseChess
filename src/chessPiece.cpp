@@ -1,4 +1,4 @@
-#include "../include/header/chessPiece.h"
+#include "../include/headers/chessPiece.h"
 
 void ChessPiece::init(){
     int Pos[90] = {
