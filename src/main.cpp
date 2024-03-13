@@ -18,7 +18,6 @@ int main(int arg, char* argv[]){
     
     ChessPiece piece;
     piece.init();
-    piece.print();
 
     graphics graphic;
     graphic.initSDL();
