@@ -2,19 +2,7 @@
 #define _CHESSPIECE__H
 
 #include "include.h"
-
-#define EMPTY                   0
-#define LIGHT                   2
-#define DARK                    1
-
-#define PAWN                    1
-#define BISHOP                  2
-#define ELEPHANT                3
-#define KNIGHT                  4
-#define CANNON                  5
-#define ROOK                    6
-#define KING                    7
-
+#include "defs.h"
 struct ChessPiece{
     ChessPiece(){
     }

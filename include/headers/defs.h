@@ -1,13 +1,23 @@
 #ifndef _DEFS__H
-
-
 #define _DEFS__H
 
 #include "include.h"
 
-const int SCREEN_WIDTH = 600;
-const int SCREEN_HEIGHT = 640;
-const char* WINDOW_TITLE = "Xiangqi";
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 640
+#define WINDOW_TITLE "Xiangqi"
+
+#define EMPTY                   0
+#define LIGHT                   2
+#define DARK                    1
+
+#define PAWN                    1
+#define BISHOP                  2
+#define ELEPHANT                3
+#define KNIGHT                  4
+#define CANNON                  5
+#define ROOK                    6
+#define KING                    7
 
 const int chessPiecePos[][4]{
     //den

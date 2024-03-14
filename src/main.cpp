@@ -1,23 +1,9 @@
-#include "../include/headers/include.h"
-#include "../include/headers/defs.h"
-#include "../include/headers/graphics.h"
-#include "../include/headers/function.h"
-#include "../include/headers/chessPiece.h"
 #include "../include/headers/logic.h"
-
-// #include "include/headers/include.h"
-// #include "include/headers/defs.h"
-// #include "include/headers/graphics.h"
-// #include "include/headers/function.h"
-// #include "include/headers/chessPiece.h"
-// #include "include/headers/logic.h"
 
 bool quit = false;
 
 int main(int arg, char* argv[]){
-    
-    ChessPiece piece;
-    piece.init();
+    std::cout << "hello" << std::endl;
 
     graphics graphic;
     graphic.initSDL();
@@ -40,5 +26,6 @@ int main(int arg, char* argv[]){
 
     }
     graphic.QuitSDL();
+    std::cout << "hello" << std::endl;
     return 0;
 }

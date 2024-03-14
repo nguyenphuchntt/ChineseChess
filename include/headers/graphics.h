@@ -2,11 +2,9 @@
 
 #define _GRAPHICS__H
 
-#include "function.h"
-#include "defs.h"
 #include "media.h"
 #include "chessPiece.h"
-
+#include "function.h"
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
