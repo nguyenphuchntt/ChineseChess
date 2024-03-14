@@ -19,23 +19,12 @@
 #define ROOK                    6
 #define KING                    7
 
-const int chessPiecePos[][4]{
-    //den
-    {4,4,60,60},//tuong
-    {71,4,60,60},//si
-    {138,4,60,60},//tuong
-    {205,4,60,60},//xe
-    {272,4,60,60},//ma
-    {205,70,60,60},//tot
-    {272,70,60,60},//phao
-    // do
-    {4,135,60,60}, // tuong
-    {71,135,60,60}, //si
-    {138,135,60,60}, //tuong
-    {205,200,60,60}, // xe    
-    {272,200,60,60}, // ma
-    {138,200,60,60}, // tot    
-    {339,135,60,60} // phao
-};
+#define BOARD_X 56
+#define BOARD_Y 40
+#define CELL_SIZE_X 60
+#define CELL_SIZE_Y 63
+
+#define START 1
+#define WAITING 0
 
 #endif
