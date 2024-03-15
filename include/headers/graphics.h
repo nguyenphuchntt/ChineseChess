@@ -26,7 +26,7 @@ struct graphics{
     void QuitSDL();
 
     void renderChessPiece(int n, const ChessPiece& chessPiece);
-    void displayChessPiece(int &status, const ChessPiece& chessPiece);
+    void displayChessPiece(const ChessPiece& chessPiece);
 };
 
 #endif

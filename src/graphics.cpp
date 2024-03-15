@@ -76,7 +76,7 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
     dst.y = BOARD_Y + i * CELL_SIZE_Y  - 30;
     dst.w = 60;
     dst.h = 60;
-    std::cout << n << " " << dst.x << " " << dst.y;
+    // std::cout << n << " " << dst.x << " " << dst.y;
     SDL_Rect src;
     if (chessPiece.pieceColor[n] == LIGHT){
         src.x = chessPiece.lightPos[chessPiece.piecePos[n]-1][0];
@@ -90,21 +90,15 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
         src.w = chessPiece.darkPos[chessPiece.piecePos[n]-1][2];
         src.h = chessPiece.darkPos[chessPiece.piecePos[n]-1][3];
     }
-    std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
-    // SDL_QueryTexture(chessPiece.texture, NULL, NULL, &dst.w, &dst.h);
+    // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
     SDL_RenderCopy(renderer, chessPiece.texture, &src, &dst);
-    std::cout << std::endl;
+    // std::cout << std::endl;
 }
 
-void graphics::displayChessPiece(int &status, const ChessPiece& chessPiece){
-    if (!status) return;
+void graphics::displayChessPiece(const ChessPiece& chessPiece){
     for (int n = 0; n < 90; n++){
         if ((chessPiece.pieceColor[n] == LIGHT) || (chessPiece.pieceColor[n] == DARK)){
-            renderChessPiece(n, chessPiece);
-            SDL_RenderPresent(renderer);            
+            renderChessPiece(n, chessPiece);        
         }
-
     }
-    status = WAITING;
 }
-    
