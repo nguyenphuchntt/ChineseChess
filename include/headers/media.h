@@ -4,7 +4,8 @@
 
 enum gameMedia {
     GAMEBOARD,
-    CHESSPIECE
+    CHESSPIECE,
+    SELECT
 };
 
 

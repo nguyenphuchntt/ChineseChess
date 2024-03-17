@@ -35,3 +35,8 @@ Kiểm tra xem quân đang được chọn là quân nào
 Tính tổng số điểm hiện tại trừ đi tổng số điểm của đối phương
 Cho điểm cụ thể cho từng quân cờ
 
+
+
+
+PS:
+Chú ý là nước đi quân Tốt của hai bên khác nhau hướng tiến. Để tiết kiệm ta chỉ lưu nước tiến của Tốt đen, còn nước tiến của Tốt trắng chỉ đơn giản lấy ngược dấu.

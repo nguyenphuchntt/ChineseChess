@@ -5,6 +5,7 @@ void ChineseChess::init(){
     turn = LIGHT;
 
     graphic.initSDL();
+    piece.init();
     piece.texture = this->graphic.gameMedia[CHESSPIECE];
 
 }
@@ -20,7 +21,7 @@ void ChineseChess::getInput(){
     }
     int clickedCol = (this->mouse.x - (BOARD_X-CELL_SIZE_X/2)) / (CELL_SIZE_X);
     int clickedRow = (this->mouse.y - (BOARD_Y-CELL_SIZE_Y/2)) / (CELL_SIZE_Y);
-    // std::cout << clickedCol << " " << clickedRow;
+    // std::cout << clickedCol << " " << clickedRow << " " << this->piece.selected << " ";
     this->piece.tmp_selected = clickedRow * 9 + clickedCol;
 
     // std::cout << " " << pos << std::endl;
@@ -28,15 +29,22 @@ void ChineseChess::getInput(){
 
 void ChineseChess::processClick(){
     if (this->piece.pieceColor[this->piece.tmp_selected] == turn){
-        this->piece.selected = this->piece.tmp_selected;
-        return;
+        if (this->piece.tmp_selected == this->piece.selected){
+            this->piece.tmp_selected = NONE;
+            this->piece.selected = NONE;
+        }else{
+            this->piece.selected = this->piece.tmp_selected;
+            return; 
+        }
     }
     else{
-        if (this->piece.selected != EMPTY){
-            if (this->ValidStep()){
-                this->move(this->piece.selected, this->piece.tmp_selected);
-            }        
-            this->piece.selected = EMPTY;   
+        if (this->piece.selected != NONE){
+            // std::cout << piece.selected << " ";
+            this->move(this->piece.selected, this->piece.tmp_selected);
+            // if (this->ValidStep()){
+            //     this->move(this->piece.selected, this->piece.tmp_selected);
+            // }        
+            // this->piece.selected = NONE;
         }
     
     }
@@ -57,15 +65,21 @@ void ChineseChess::processClick(){
 }
 
 void ChineseChess::move(int from, int dest){
+    if (!ValidStep(from, dest)){
+        return;
+    }
     this->piece.piecePos[dest] =  this->piece.piecePos[from];
     this->piece.piecePos[from] = EMPTY;
 
     this->piece.pieceColor[dest] = turn;
     this->piece.pieceColor[from] = EMPTY;
     
+    this->piece.selected = NONE;
     this->switchTurn();
 }
 
-bool ChineseChess::ValidStep(){
+bool ChineseChess::ValidStep(int from, int dest){
+
+    
     return true;
 }

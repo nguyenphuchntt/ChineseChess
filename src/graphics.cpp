@@ -29,6 +29,7 @@ void graphics::prepareScene(){
 void graphics::loadMedia(){
     gameMedia.push_back(this->loadTexture("assets/img/gameBoard.png"));
     gameMedia.push_back(this->loadTexture("assets/img/chessPiece.png"));
+    gameMedia.push_back(this->loadTexture("assets/img/select.png"));
     std::cout << "load media successful!" << std::endl;
 }
 
@@ -89,6 +90,14 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
         src.y = chessPiece.darkPos[chessPiece.piecePos[n]-1][1];
         src.w = chessPiece.darkPos[chessPiece.piecePos[n]-1][2];
         src.h = chessPiece.darkPos[chessPiece.piecePos[n]-1][3];
+    }
+    if (n == chessPiece.selected && chessPiece.selected != NONE){
+        SDL_Rect d;
+        d.x = BOARD_X + j * CELL_SIZE_X - 32;
+        d.y = BOARD_Y + i * CELL_SIZE_Y  - 32;
+        d.w = 63;
+        d.h = 63;
+        SDL_RenderCopy(renderer, this->gameMedia[SELECT], NULL, &d);
     }
     // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
     SDL_RenderCopy(renderer, chessPiece.texture, &src, &dst);
