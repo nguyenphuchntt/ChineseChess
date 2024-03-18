@@ -23,20 +23,20 @@ void graphics::initSDL(){
 void graphics::prepareScene(){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, gameMedia[GAMEBOARD], NULL, NULL);    
+    SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);    
 }
 
 void graphics::loadMedia(){
-    gameMedia.push_back(this->loadTexture("assets/img/gameBoard.png"));
-    gameMedia.push_back(this->loadTexture("assets/img/chessPiece.png"));
-    gameMedia.push_back(this->loadTexture("assets/img/select.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/gameBoard.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/chessPiece.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/select.png"));
     std::cout << "load media successful!" << std::endl;
 }
 
 void graphics::freeMedia(){
-    for (int i = 0; i < gameMedia.size(); i++){
-        SDL_DestroyTexture(gameMedia[i]);
-        gameMedia[i] = NULL;
+    for (int i = 0; i < gamePicture.size(); i++){
+        SDL_DestroyTexture(gamePicture[i]);
+        gamePicture[i] = NULL;
     } 
 }
 
@@ -97,7 +97,7 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
         d.y = BOARD_Y + i * CELL_SIZE_Y  - 32;
         d.w = 63;
         d.h = 63;
-        SDL_RenderCopy(renderer, this->gameMedia[SELECT], NULL, &d);
+        SDL_RenderCopy(renderer, this->gamePicture[SELECT], NULL, &d);
     }
     // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
     SDL_RenderCopy(renderer, chessPiece.texture, &src, &dst);

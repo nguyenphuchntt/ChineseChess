@@ -9,7 +9,9 @@
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
-    std::vector<SDL_Texture*> gameMedia;
+    std::vector<SDL_Texture*> gamePicture;
+    // std::vector<Mix_Chunk*> gameSoundEffect;
+    // Mix_Music* backgrounMusic = NULL;
 
     graphics(){
     }

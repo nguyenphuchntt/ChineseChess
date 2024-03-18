@@ -6,7 +6,7 @@ void ChineseChess::init(){
 
     graphic.initSDL();
     piece.init();
-    piece.texture = this->graphic.gameMedia[CHESSPIECE];
+    piece.texture = this->graphic.gamePicture[CHESSPIECE];
 
 }
 
