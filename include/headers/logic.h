@@ -21,6 +21,8 @@ struct ChineseChess{
     void move(int from, int dest);
     void undo(int dest, int from);
 
+    void gen();
+
     bool ValidStep(int from, int dest);
 
     void switchTurn();
