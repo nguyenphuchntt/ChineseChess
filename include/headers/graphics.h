@@ -9,9 +9,7 @@
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
-    std::vector<SDL_Texture*> gamePicture;
-    // std::vector<Mix_Chunk*> gameSoundEffect;
-    // Mix_Music* backgrounMusic = NULL;
+    std::vector<SDL_Texture*> gameMedia;
 
     graphics(){
     }
@@ -28,7 +26,7 @@ struct graphics{
     void QuitSDL();
 
     void renderChessPiece(int n, const ChessPiece& chessPiece);
-    void displayChessPiece(const ChessPiece& chessPiece);
+    void displayChessPiece(int &status, const ChessPiece& chessPiece);
 };
 
 #endif

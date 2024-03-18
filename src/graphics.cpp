@@ -23,20 +23,19 @@ void graphics::initSDL(){
 void graphics::prepareScene(){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);    
+    SDL_RenderCopy(renderer, gameMedia[GAMEBOARD], NULL, NULL);    
 }
 
 void graphics::loadMedia(){
-    gamePicture.push_back(this->loadTexture("assets/img/gameBoard.png"));
-    gamePicture.push_back(this->loadTexture("assets/img/chessPiece.png"));
-    gamePicture.push_back(this->loadTexture("assets/img/select.png"));
+    gameMedia.push_back(this->loadTexture("assets/img/gameBoard.png"));
+    gameMedia.push_back(this->loadTexture("assets/img/chessPiece.png"));
     std::cout << "load media successful!" << std::endl;
 }
 
 void graphics::freeMedia(){
-    for (int i = 0; i < gamePicture.size(); i++){
-        SDL_DestroyTexture(gamePicture[i]);
-        gamePicture[i] = NULL;
+    for (int i = 0; i < gameMedia.size(); i++){
+        SDL_DestroyTexture(gameMedia[i]);
+        gameMedia[i] = NULL;
     } 
 }
 
@@ -77,7 +76,7 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
     dst.y = BOARD_Y + i * CELL_SIZE_Y  - 30;
     dst.w = 60;
     dst.h = 60;
-    // std::cout << n << " " << dst.x << " " << dst.y;
+    std::cout << n << " " << dst.x << " " << dst.y;
     SDL_Rect src;
     if (chessPiece.pieceColor[n] == LIGHT){
         src.x = chessPiece.lightPos[chessPiece.piecePos[n]-1][0];
@@ -91,23 +90,21 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
         src.w = chessPiece.darkPos[chessPiece.piecePos[n]-1][2];
         src.h = chessPiece.darkPos[chessPiece.piecePos[n]-1][3];
     }
-    if (n == chessPiece.selected && chessPiece.selected != NONE){
-        SDL_Rect d;
-        d.x = BOARD_X + j * CELL_SIZE_X - 32;
-        d.y = BOARD_Y + i * CELL_SIZE_Y  - 32;
-        d.w = 63;
-        d.h = 63;
-        SDL_RenderCopy(renderer, this->gamePicture[SELECT], NULL, &d);
-    }
-    // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
+    std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
+    // SDL_QueryTexture(chessPiece.texture, NULL, NULL, &dst.w, &dst.h);
     SDL_RenderCopy(renderer, chessPiece.texture, &src, &dst);
-    // std::cout << std::endl;
+    std::cout << std::endl;
 }
 
-void graphics::displayChessPiece(const ChessPiece& chessPiece){
+void graphics::displayChessPiece(int &status, const ChessPiece& chessPiece){
+    if (!status) return;
     for (int n = 0; n < 90; n++){
         if ((chessPiece.pieceColor[n] == LIGHT) || (chessPiece.pieceColor[n] == DARK)){
-            renderChessPiece(n, chessPiece);        
+            renderChessPiece(n, chessPiece);
+            SDL_RenderPresent(renderer);            
         }
+
     }
+    status = WAITING;
 }
+    
