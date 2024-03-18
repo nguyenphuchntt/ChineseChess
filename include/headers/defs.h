@@ -27,6 +27,4 @@
 #define START 1
 #define WAITING 0
 
-#define NONE -1
-
 #endif

@@ -6,8 +6,6 @@
 struct ChessPiece{
 
     SDL_Texture* texture;
-    int selected;
-    int tmp_selected;
 
     int pieceColor[90] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -54,6 +52,7 @@ struct ChessPiece{
         {272,70,60,60},//phao
         {205,4,60,60},//xe
         {4,4,60,60}//tuong-king
+<<<<<<< HEAD
     }; 
 
     short Offset[8][8] =
@@ -118,11 +117,28 @@ struct ChessPiece{
 
 
 
+=======
+    };       
+
+    int turn;
+    int selected;
+    // int type;
+>>>>>>> parent of a7f511d (error fixed)
 
     ChessPiece(){
     }
     void init();
-    ~ChessPiece();    
+    void getInput(int pos);
+    bool processClick();
+
+    void move(int from, int dest);
+    void undo(int dest, int from);
+
+    bool ValidStep();
+
+    void switchTurn();
+    
+    ~ChessPiece();
 
 };
 

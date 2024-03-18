@@ -2,15 +2,10 @@
 
 #define _MEDIA__H
 
-enum gamePicture {
+enum gameMedia {
     GAMEBOARD,
-    CHESSPIECE,
-    SELECT,
+    CHESSPIECE
 };
 
-enum gameAudio {
-    KILL_SOUND,
-    MOVE_SOUND
-};
 
 #endif
