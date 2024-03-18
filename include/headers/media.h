@@ -5,7 +5,7 @@
 enum gamePicture {
     GAMEBOARD,
     CHESSPIECE,
-    SELECT
+    SELECT,
 };
 
 enum gameAudio {
