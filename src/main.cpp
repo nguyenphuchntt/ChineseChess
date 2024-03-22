@@ -3,33 +3,29 @@
 bool quit = false;
 
 int main(int arg, char* argv[]){
-    int status = 1;
-
-    graphics graphic;
-    graphic.initSDL();
-    
-    ChessPiece piece;
-    piece.init();
-    piece.texture = graphic.gameMedia[CHESSPIECE]; 
-
-    graphic.prepareScene();
+    ChineseChess game;
+    game.init(); 
     
     SDL_Event event;
     while (!quit){
+        game.graphic.prepareScene();
         
-		
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
                 quit = true;
             }
+            if (event.type == SDL_MOUSEBUTTONDOWN){
+                game.getInput();
+                game.processClick();
+            }
         }
-
-        graphic.displayChessPiece(status, piece);
-        SDL_RenderPresent(graphic.renderer);
-        // SDL_Delay(100);
-
-
+        
+        game.graphic.displayChessPiece(game.piece);
+        SDL_RenderPresent(game.graphic.renderer);
+        // SDL_GetMouseState(&x, &y);
+        // std::cout << "--" << x << " " << y << std::endl;
+        // SDL_Delay(500);
     }
-    graphic.QuitSDL();
+    game.graphic.QuitSDL();
     return 0;
 }

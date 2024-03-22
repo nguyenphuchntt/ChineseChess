@@ -19,12 +19,14 @@
 #define ROOK                    6
 #define KING                    7
 
-#define BOARD_X 56
+#define BOARD_X 58
 #define BOARD_Y 40
 #define CELL_SIZE_X 60
 #define CELL_SIZE_Y 63
 
 #define START 1
 #define WAITING 0
+
+#define NONE -1
 
 #endif
