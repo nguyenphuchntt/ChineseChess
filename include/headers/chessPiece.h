@@ -112,7 +112,7 @@ struct ChessPiece{
         9, 9, 9, 9, 9, 9, 9, 9, 9,
         9, 9, 9, 9, 9, 9, 9, 9, 9
     };
-    short   Maskpiece[7] = { 8, 2, 4, 1, 1, 1, 2 };
+    short   Maskpiece[8] = {0, 8, 2, 4, 1, 1, 1, 2 };
     short   Knightcheck[8] = { 1, -1, -9, -9, -1, 1, 9, 9 };
     short   Elephancheck[8] = { -10, -8, 8, 10, 0, 0, 0, 0 };        
 

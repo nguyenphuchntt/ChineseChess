@@ -29,4 +29,6 @@
 
 #define NONE -1
 
+#define DEPTH 6
+
 #endif
