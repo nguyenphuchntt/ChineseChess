@@ -9,7 +9,7 @@ typedef struct
 typedef struct
 {
     int   from, dest;
-    // int     capture;
+    int   capture; // type of chesspiece
 } MOVEDATA, *PMOVEDATA;
 
 

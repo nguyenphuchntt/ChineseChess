@@ -3,9 +3,11 @@
 
 #include "include.h"
 #include "defs.h"
+#include "move.h"
 struct ChessPiece{
 
     SDL_Texture* texture;
+    MOVE Move;
     int selected;
     int tmp_selected;    
 

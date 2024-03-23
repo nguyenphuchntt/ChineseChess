@@ -20,18 +20,23 @@ struct ChineseChess{
     short       gen_end[50];
 
     MOVE        arMove[4096];
+    PMOVE       NewMove;
     MOVEDATA    MoveData[50];
 
     int ply;
+    short depth;
+
+    short alpha, beta;
 
     void init();
     void getInput();
     void processClick();
 
-    void move(int from, int dest);
-    void undo(int dest, int from);
+    bool move(int from, int dest);
 
     void gen();
+    short AlphaBeta(short alpha, short beta, short depth);
+    void processMove();
 
     bool ValidStep(int from, int dest);
 

@@ -91,7 +91,7 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
         src.w = chessPiece.darkPos[chessPiece.piecePos[n]-1][2];
         src.h = chessPiece.darkPos[chessPiece.piecePos[n]-1][3];
     }
-    if (n == chessPiece.selected && chessPiece.selected != NONE){
+    if (n == chessPiece.Move.from && chessPiece.Move.from != NONE){
         SDL_Rect d;
         d.x = BOARD_X + j * CELL_SIZE_X - 32;
         d.y = BOARD_Y + i * CELL_SIZE_Y  - 32;
