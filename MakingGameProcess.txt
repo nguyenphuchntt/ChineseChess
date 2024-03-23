@@ -1,37 +1,10 @@
-#prepare
-file để lưu lại nước đi
-=================================
-1.Tạo bàn cờ (10 hàng x 9 cột)
-C1: Mảng 2 chiều
-C2: Mảng một chiều [1, 90]
-
-define ký hiệu quân cờ từ giá trị thấp tới cao
--Mảng để đánh dấu vị trí quân cờ
-define ký hiệu quân đỏ/đen
--Mảng để đánh dấu vị trí đỏ/đen
-
--giá trị TURN (hoặc side) -> đánh dấu bên nào tới lượt đi
--có thể tạo thêm mỗi chiều 4 cột/hàng để check nước đi sai (của tượng và mã)
-
-
-
-2.Sinh nước đi
-2.1.logic
-Hàm move -> di chuyển một quân từ vị trí a -> b
-Hai tướng không thể đối mặt trực tiếp với nhau
-Kiểm tra xem nước đi có hợp lý không && có bị vướng quân nào không?
-Kiểm tra xem vị trí sắp tới của quân có hợp lý không (ví dụ sĩ và tướng chỉ có thể ở trong cunng)
-->sử dụng bit để đánh dấu (mảng legalMove)
-(tốt sông)(tốt)(tướng)(sĩ)(tượng)(xe, pháo, mã)
-Kiểm tra Pháo, cản mã & tượng
-
-
-2.2.graphic
-Kiểm tra xem quân đang được chọn là quân nào
-
-
 
 3.Lượng giá bàn cờ
 Tính tổng số điểm hiện tại trừ đi tổng số điểm của đối phương
 Cho điểm cụ thể cho từng quân cờ
 
+minimax algorithm
+
+appear all available next steps -> split selected chessPiece to another function
+
+file để lưu lại nước đi

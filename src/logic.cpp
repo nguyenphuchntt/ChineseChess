@@ -123,7 +123,7 @@ void ChineseChess::gen(){
                         }
                         break;
                         case ELEPHANT:
-                        if (this->piece.pieceColor[i + this->piece.Knightcheck[j]] == EMPTY)
+                        if (this->piece.pieceColor[i + this->piece.Elephancheck[j]] == EMPTY)
                         {
                             arMove[gen_end[ply]].from = i;
                             arMove[gen_end[ply]].dest = y;
