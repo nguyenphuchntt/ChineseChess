@@ -25,8 +25,6 @@ int main(int arg, char* argv[]){
             }
         }
         game.render();
-        SDL_RenderPresent(game.graphic.renderer);
-
     }
     game.quit();
     return 0;

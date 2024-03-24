@@ -62,7 +62,6 @@ void ChineseChess::processClick(){
 }
 
 bool ChineseChess::move(int from, int dest){
-    
     if (this->ValidStep(from, dest))
     {
         if (this->piece.pieceColor[this->piece.Move.dest] == EMPTY){
@@ -71,7 +70,7 @@ bool ChineseChess::move(int from, int dest){
             this->graphic.play(this->graphic.gameAudio[KILL_SOUND]);
         }
 
-        this->piece.piecePos[dest] =  this->piece.piecePos[from];
+        this->piece.piecePos[dest] =  this->piece.piecePos[from];   
         this->piece.piecePos[from] = EMPTY;
 
         this->piece.pieceColor[dest] = turn;
@@ -83,6 +82,26 @@ bool ChineseChess::move(int from, int dest){
     return false;
 }
 
+void ChineseChess::unDoTest(int from, int dest){
+    this->piece.piecePos[dest] = temp_Data[0];
+    this->piece.piecePos[from] = temp_Data[1];
+    this->piece.pieceColor[dest] = temp_Data[2];
+    this->piece.pieceColor[from] = temp_Data[3]; 
+}
+
+void ChineseChess::doTest(int from, int dest){
+    temp_Data[0] = this->piece.piecePos[dest];
+    temp_Data[1] = this->piece.piecePos[from];   
+    temp_Data[2] = this->piece.pieceColor[dest];
+    temp_Data[3] = this->piece.pieceColor[from];
+
+    this->piece.piecePos[dest] =  this->piece.piecePos[from];   
+    this->piece.piecePos[from] = EMPTY;
+
+    this->piece.pieceColor[dest] = turn;
+    this->piece.pieceColor[from] = EMPTY;
+
+}
 
 bool ChineseChess::isOver(){
     // return (this->Win() || this->Lose());
@@ -109,4 +128,5 @@ void ChineseChess::processMove(){
 
 void ChineseChess::render(){
     this->graphic.displayChessPiece(this->piece);
+    SDL_RenderPresent(this->graphic.renderer);
 }

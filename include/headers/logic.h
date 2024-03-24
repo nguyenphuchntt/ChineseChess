@@ -23,6 +23,8 @@ struct ChineseChess{
     PMOVE       NewMove;
     MOVEDATA    MoveData[50];
 
+    int temp_Data[4] = {NONE};
+
     int ply;
     short depth;
 
@@ -35,8 +37,12 @@ struct ChineseChess{
     void processClick();
 
     bool move(int from, int dest);
+    void unDoTest(int from, int dest);
+    void doTest(int from, int dest);
+
 
     void gen();
+    bool KingFaceCheck(short from, short dest);
     short AlphaBeta(short alpha, short beta, short depth);
     void processMove();
 
