@@ -29,7 +29,9 @@ struct ChineseChess{
     short alpha, beta;
 
     void init();
+    void quit();
     void getInput();
+    void render();
     void processClick();
 
     bool move(int from, int dest);

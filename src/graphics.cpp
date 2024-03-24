@@ -17,6 +17,9 @@ void graphics::initSDL(){
     if (!IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)){
         logErrorAndExit("init IMG", IMG_GetError());
     }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+        logErrorAndExit("SDL_mixer could not initialize!", Mix_GetError());
+    }
     this->loadMedia();    
 }
 
@@ -24,12 +27,19 @@ void graphics::prepareScene(){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);    
+
+    this->play(backgrounMusic);
 }
 
 void graphics::loadMedia(){
     gamePicture.push_back(this->loadTexture("assets/img/gameBoard.png"));
     gamePicture.push_back(this->loadTexture("assets/img/chessPiece.png"));
-    gamePicture.push_back(this->loadTexture("assets/img/select.png"));    
+    gamePicture.push_back(this->loadTexture("assets/img/select.png"));   
+
+    backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
+
+    gameAudio.push_back(this->loadSound("assets/audio/kill_sound.wav"));
+    gameAudio.push_back(this->loadSound("assets/audio/move_sound.wav"));
     std::cout << "load media successful!" << std::endl;
 }
 
@@ -37,7 +47,13 @@ void graphics::freeMedia(){
     for (int i = 0; i < gamePicture.size(); i++){
         SDL_DestroyTexture(gamePicture[i]);
         gamePicture[i] = NULL;
-    } 
+    }
+    for (int i = 0; i < gameAudio.size(); i++){
+        Mix_FreeChunk(gameAudio[i]);
+        gameAudio[i] = NULL;
+    }    
+    Mix_FreeMusic(backgrounMusic);
+    backgrounMusic = NULL;
 }
 
 SDL_Texture* graphics::loadTexture(const char* fileName){
@@ -47,6 +63,40 @@ SDL_Texture* graphics::loadTexture(const char* fileName){
         logErrorAndExit("load media", IMG_GetError());
     }
     return texture;
+}
+
+Mix_Music* graphics::loadMusic(const char* path){
+    Mix_Music* gMusic = Mix_LoadMUS(path);
+    if (gMusic == nullptr){
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "could not load music!", Mix_GetError());
+    }
+    return gMusic;
+}
+
+Mix_Chunk* graphics::loadSound(const char* path){
+    Mix_Chunk* gChunk = Mix_LoadWAV(path);
+    if (gChunk == nullptr){
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "could not load sound!", Mix_GetError());
+    }
+    return gChunk;
+}
+
+void graphics::play(Mix_Music* gMusic){
+    if (gMusic == nullptr){
+        return;
+    }
+    if (Mix_PlayingMusic() == 0){
+        Mix_PlayMusic(gMusic, -1);
+    }
+    else if (Mix_PausedMusic() == 1){
+        Mix_ResumeMusic();
+    }
+}
+
+void graphics::play(Mix_Chunk* gChunk){
+    if (gChunk != nullptr){
+        Mix_PlayChannel(-1, gChunk, 0);
+    }
 }
 
 void graphics::renderTexture(SDL_Texture* texture, int x, int y){
@@ -65,6 +115,7 @@ void graphics::QuitSDL(){
     renderer = NULL;
     window = NULL;
 
+    Mix_Quit();
     IMG_Quit();
     SDL_Quit();
 }

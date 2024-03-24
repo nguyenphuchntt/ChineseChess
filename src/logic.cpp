@@ -24,6 +24,10 @@ void ChineseChess::init(){
 
 }
 
+void ChineseChess::quit(){
+    this->graphic.QuitSDL();
+}
+
 void ChineseChess::switchTurn(){
     turn = (turn == LIGHT) ? DARK : LIGHT;
     xturn = (turn == LIGHT) ? DARK : LIGHT;
@@ -49,20 +53,12 @@ void ChineseChess::processClick(){
         return;
     }
     else{
-        // if (this->piece.Move.from != NONE){
-        //     if (this->ValidStep(this->piece.Move.from, this->piece.Move.dest)){
-        //         this->move(this->piece.Move.from, this->piece.Move.dest);
-        //         this->piece.Move = {NONE, NONE};
-        //     }        
-        //     this->piece.Move = {NONE, NONE};
-        // }
         if (this->piece.Move.from != NONE){
             this->move(this->piece.Move.from, this->piece.Move.dest);
             this->piece.Move = {NONE, NONE};
         }        
 
     }
-
 }
 
 bool ChineseChess::move(int from, int dest){
@@ -103,4 +99,8 @@ void ChineseChess::processMove(){
     this->AlphaBeta(alpha, beta, depth);
     this->move(this->piece.Move.from, this->piece.Move.dest);
     this->piece.Move = {NONE, NONE};
+}
+
+void ChineseChess::render(){
+    this->graphic.displayChessPiece(this->piece);
 }

@@ -24,10 +24,10 @@ int main(int arg, char* argv[]){
                 }                
             }
         }
-        game.graphic.displayChessPiece(game.piece);
+        game.render();
         SDL_RenderPresent(game.graphic.renderer);
 
     }
-    game.graphic.QuitSDL();
+    game.quit();
     return 0;
 }
