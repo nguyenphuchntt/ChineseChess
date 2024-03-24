@@ -6,6 +6,7 @@ void ChineseChess::gen(){
     {
     if (this->piece.pieceColor[i] == turn){
         int p = this->piece.piecePos[i];
+        // bool FaceCheck = false;
         for (int j = 0; j < 8; j++){
             if (!this->piece.Offset[p][j]) break;
             short x = this->piece.Mailbox90[i]; // used to convert from mailbox90 to large box
@@ -19,6 +20,27 @@ void ChineseChess::gen(){
                 short y = this->piece.Largebox[x]; // convert mailbox90 to largebox
                 char t = ((turn == DARK) ? y : (89 - y)); // because legalPos just describe for one side
                 if (y == -1 || (this->piece.Legalposition[t] & this->piece.Maskpiece[p]) == 0) break;
+                // if (p == KING){
+                //     FaceCheck = true;
+                //     short aa = x;
+                //     for (int nn = 0; nn < 9; nn++){
+                //         aa -= 13;
+                //         short t;
+                //         if (turn != LIGHT){
+                //             t = 89 - aa;
+                //         }else{
+                //             t = aa;
+                //         }
+                //         short bb = this->piece.Largebox[t];
+                //         if (bb == -1) break;
+                //         if (piece.piecePos[bb] != EMPTY){
+                //             FaceCheck = false;
+                //         }
+                //         if (piece.piecePos[bb] == KING){
+                //             break;
+                //         }
+                //     }
+                // }
                 if (!fCannon)
                 {
                 if (this->piece.pieceColor[y] != turn){
@@ -48,6 +70,9 @@ void ChineseChess::gen(){
                             }
                             break;
                         default:
+                            // if (p == KING && FaceCheck){
+                            //     break;
+                            // }
                             arMove[gen_end[ply]].from = i;
                             arMove[gen_end[ply]].dest = y;
                             gen_end[ply]++;
