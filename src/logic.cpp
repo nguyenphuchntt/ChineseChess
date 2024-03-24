@@ -65,6 +65,12 @@ bool ChineseChess::move(int from, int dest){
     
     if (this->ValidStep(from, dest))
     {
+        if (this->piece.pieceColor[this->piece.Move.dest] == EMPTY){
+            this->graphic.play(this->graphic.gameAudio[MOVE_SOUND]);
+        }else{
+            this->graphic.play(this->graphic.gameAudio[KILL_SOUND]);
+        }
+
         this->piece.piecePos[dest] =  this->piece.piecePos[from];
         this->piece.piecePos[from] = EMPTY;
 

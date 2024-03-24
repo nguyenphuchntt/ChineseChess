@@ -1,10 +1,11 @@
 
-3.Lượng giá bàn cờ
-Tính tổng số điểm hiện tại trừ đi tổng số điểm của đối phương
-Cho điểm cụ thể cho từng quân cờ
 
 minimax algorithm
 
 appear all available next steps -> split selected chessPiece to another function
 
-file để lưu lại nước đi
+file để lưu lại nước đi, hiện nước đi
+
+menu
+
+hai tướng không thể chạm mặt nhau
