@@ -4,7 +4,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
     static short hdp;
     short value, best;
     if (!depth){
-        short   piecevalue[8] = {0, 10, 20, 20, 40, 45, 90, 1000};
+        short   piecevalue[8] = {0, 10, 25, 20, 40, 45, 90, 1000};
         short   iEval = 0;
         for (short i = 0; i < 90; i++){ // evaluate
         if (this->piece.pieceColor[i] == turn)

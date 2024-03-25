@@ -8,3 +8,11 @@ file để lưu lại nước đi, hiện nước đi
 menu
 
 endgame
+
++Tấn (tiến): (.) dấu chấm. Chú ý là nước tấn của Xe, Pháo, Tốt được ghi hơi khác với Mã, Tượng. Ví dụ: X2.6 có nghĩa Xe ở cột 2 tiến 6 ô. Còn M 2.3 có nghĩa là quân Mã đang ở cột 2 tiến sang cột 3).
++Thoái (lui): (/) gạch chéo. Ngược với tấn. Ví dụ M7/8 nghĩa là Mã cột 7 thoái lui sang cột 8.
++Bình (sang ngang): (-) dấu ngang (P2-5 nghĩa là Pháo 2 sang ngang đến cột 5).
+
+
+
+/change :value 1000-ply

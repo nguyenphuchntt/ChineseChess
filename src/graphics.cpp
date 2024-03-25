@@ -20,6 +20,11 @@ void graphics::initSDL(){
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
         logErrorAndExit("SDL_mixer could not initialize!", Mix_GetError());
     }
+    if (TTF_Init() == -1) {
+        logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ",
+                             TTF_GetError());
+    }
+
     this->loadMedia();    
 }
 
@@ -115,6 +120,7 @@ void graphics::QuitSDL(){
     renderer = NULL;
     window = NULL;
 
+    TTF_Quit();
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();
