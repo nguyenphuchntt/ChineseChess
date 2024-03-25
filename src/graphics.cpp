@@ -37,15 +37,34 @@ void graphics::prepareScene(){
 }
 
 void graphics::loadMedia(){
+    gamePicture.push_back(this->loadTexture("assets/img/1player.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/2player.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/black.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/Brown.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/exit.png")); 
     gamePicture.push_back(this->loadTexture("assets/img/gameBoard.png"));
-    gamePicture.push_back(this->loadTexture("assets/img/chessPiece.png"));
-    gamePicture.push_back(this->loadTexture("assets/img/select.png"));   
+    gamePicture.push_back(this->loadTexture("assets/img/chessPiece.png"));     
+    gamePicture.push_back(this->loadTexture("assets/img/gameOverNotification.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/hint.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/menu.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/select.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/Orange.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/quit.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/red.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/select_menu.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/start_back.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/undo.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/unselect_menu.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/lose.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/win.png")); 
 
     backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
 
     gameAudio.push_back(this->loadSound("assets/audio/kill_sound.wav"));
     gameAudio.push_back(this->loadSound("assets/audio/move_sound.wav"));
-    std::cout << "load media successful!" << std::endl;
+
+    gFont = this->loadFont("assets/font/thuPhap.ttf", 200);
+    std::cout << "loaded media!" << std::endl;
 }
 
 void graphics::freeMedia(){
@@ -59,6 +78,7 @@ void graphics::freeMedia(){
     }    
     Mix_FreeMusic(backgrounMusic);
     backgrounMusic = NULL;
+    
 }
 
 SDL_Texture* graphics::loadTexture(const char* fileName){
@@ -77,6 +97,16 @@ Mix_Music* graphics::loadMusic(const char* path){
     }
     return gMusic;
 }
+
+TTF_Font* graphics::loadFont(const char* path, int size) 
+{
+    TTF_Font* gFont = TTF_OpenFont( path, size );
+    if (gFont == nullptr) {
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Load font %s", TTF_GetError());
+    }
+    return gFont;
+}
+
 
 Mix_Chunk* graphics::loadSound(const char* path){
     Mix_Chunk* gChunk = Mix_LoadWAV(path);
@@ -104,6 +134,23 @@ void graphics::play(Mix_Chunk* gChunk){
     }
 }
 
+SDL_Texture* graphics::renderText(const char* text, TTF_Font* font, SDL_Color textColor)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Solid( font, text, textColor );
+    if (textSurface == nullptr ) {
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Render text surface %s", TTF_GetError());
+            return nullptr;
+    }
+    SDL_Texture* texture = 
+    SDL_CreateTextureFromSurface(renderer, textSurface );
+    if( texture == nullptr ) {
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Create texture from text %s", SDL_GetError());
+    }
+    SDL_FreeSurface( textSurface );
+    return texture;
+}
+
+
 void graphics::renderTexture(SDL_Texture* texture, int x, int y){
     SDL_Rect dst;
     dst.x = x;
@@ -117,6 +164,8 @@ void graphics::QuitSDL(){
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_CloseFont(gFont);
+
     renderer = NULL;
     window = NULL;
 

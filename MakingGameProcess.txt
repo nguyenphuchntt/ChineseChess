@@ -3,8 +3,6 @@ minimax algorithm
 
 appear all available next steps -> split selected chessPiece to another function
 
-file để lưu lại nước đi, hiện nước đi
-
 menu
 
 endgame
@@ -14,5 +12,3 @@ endgame
 +Bình (sang ngang): (-) dấu ngang (P2-5 nghĩa là Pháo 2 sang ngang đến cột 5).
 
 
-
-/change :value 1000-ply
