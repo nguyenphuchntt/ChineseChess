@@ -3,7 +3,7 @@
 
 #include "include.h"
 
-#define SCREEN_WIDTH 600
+#define SCREEN_WIDTH 700
 #define SCREEN_HEIGHT 640
 #define WINDOW_TITLE "Xiangqi"
 
@@ -29,6 +29,6 @@
 
 #define NONE -1
 
-#define DEPTH 5
+#define DEPTH 2//5
 
 #endif
