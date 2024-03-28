@@ -8,24 +8,24 @@ int main(int arg, char* argv[]){
     
     SDL_Event event;
     while (!quit){
-        game.graphic.prepareScene();
-        if (game.turn == DARK){
+        game.graphic.prepareScene(game.status);
+        if (game.turn == DARK && game.gameType == ONE_PLAYER){
             game.processMove();
         }
         while (SDL_PollEvent(&event)){
-
             if (event.type == SDL_QUIT){
                 quit = true;
             }
-            if (game.turn == LIGHT){ 
-                if (event.type == SDL_MOUSEBUTTONDOWN){
+            if (event.type == SDL_MOUSEBUTTONDOWN){
+                if ((game.turn == LIGHT && game.gameType == ONE_PLAYER) || game.gameType == TWO_PLAYER){
                     game.getInput();
-                    game.processClick();
-                }                
+                }
+                game.processClick();
             }
         }
+        // std::cout << game.status << " ";
         game.render();
+        if (game.quit()) break;
     }
-    game.quit();
     return 0;
 }

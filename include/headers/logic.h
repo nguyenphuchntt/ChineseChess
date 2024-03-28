@@ -15,6 +15,7 @@ struct ChineseChess{
 
     int turn; int xturn;
     int status;
+    int gameType;
 
     short       gen_begin[50];    
     short       gen_end[50];
@@ -31,7 +32,6 @@ struct ChineseChess{
     short alpha, beta;
 
     void init();
-    void quit();
     void getInput();
     void render();
     void processClick();
@@ -50,10 +50,12 @@ struct ChineseChess{
 
     void switchTurn();
 
+    int getStatus();
     bool isOver();
     bool Win();
     bool Lose();
 
+    bool quit();
 };
 
 

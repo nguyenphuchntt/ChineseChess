@@ -28,10 +28,41 @@ void graphics::initSDL(){
     this->loadMedia();    
 }
 
-void graphics::prepareScene(){
+void graphics::prepareScene(int type){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);    
+    SDL_RenderClear(renderer);    
+    if (type == RUNNING){
+        SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);  
+        this->renderTexture(gamePicture[HINT], 627, 364);
+        this->renderTexture(gamePicture[UNDO], 623, 419);
+        this->renderTexture(gamePicture[MUSIC], 627, 473);
+        this->renderTexture(gamePicture[MENU], 627, 521); 
+    }
+    if (type == START_GAME){
+        mouse.getMousePos();
+        SDL_RenderCopy(renderer, gamePicture[START_BACK], NULL, NULL);
+        if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
+            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 362);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
+        }else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 445 && mouse.y < 445+77){
+            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 445);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
+        }else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 522 && mouse.y < 522+77){
+            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 522);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
+        }
+        else{
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);      
+            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);       
+        }
+        this->renderTexture(gamePicture[ONE_PLAYER], 240, 362);
+        this->renderTexture(gamePicture[TWO_PLAYER], 240, 445);
+        this->renderTexture(gamePicture[QUIT], 240, 522);
+    }
 
     this->play(backgrounMusic);
 }
@@ -56,7 +87,8 @@ void graphics::loadMedia(){
     gamePicture.push_back(this->loadTexture("assets/img/undo.png")); 
     gamePicture.push_back(this->loadTexture("assets/img/unselect_menu.png")); 
     gamePicture.push_back(this->loadTexture("assets/img/lose.png")); 
-    gamePicture.push_back(this->loadTexture("assets/img/win.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/win.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/music.png")); 
 
     backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
 
@@ -141,8 +173,7 @@ SDL_Texture* graphics::renderText(const char* text, TTF_Font* font, SDL_Color te
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Render text surface %s", TTF_GetError());
             return nullptr;
     }
-    SDL_Texture* texture = 
-    SDL_CreateTextureFromSurface(renderer, textSurface );
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface );
     if( texture == nullptr ) {
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Create texture from text %s", SDL_GetError());
     }

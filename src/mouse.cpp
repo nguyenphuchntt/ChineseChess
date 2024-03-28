@@ -3,5 +3,6 @@
 
 
 void Mouse::getMousePos(){
-        SDL_GetMouseState(&x, &y);
-    }
+    SDL_GetMouseState(&x, &y);
+}
+

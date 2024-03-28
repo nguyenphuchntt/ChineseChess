@@ -12,7 +12,6 @@ struct Mouse{
 
     void getMousePos();
 
-
 };
 
 #endif

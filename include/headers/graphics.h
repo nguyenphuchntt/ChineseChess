@@ -5,7 +5,7 @@
 #include "media.h"
 #include "chessPiece.h"
 #include "function.h"
-
+#include "mouse.h"
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
@@ -14,11 +14,13 @@ struct graphics{
     Mix_Music* backgrounMusic = NULL;
     TTF_Font* gFont = NULL;
 
+    Mouse mouse;
+
     graphics(){
     }
 
     void initSDL();
-    void prepareScene();
+    void prepareScene(int type);
 
     void loadMedia();
     void freeMedia();

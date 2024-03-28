@@ -18,11 +18,12 @@ enum gamePicture {
     QUIT,
     RED_SQUARE,
     SELECT_MENU,
-    START,
+    START_BACK,
     UNDO,
     UNSELECT_MENU,
     YOU_LOST,
-    YOU_WON
+    YOU_WON,
+    MUSIC
 };
 
 enum gameAudio {

@@ -24,11 +24,23 @@
 #define CELL_SIZE_X 60
 #define CELL_SIZE_Y 63
 
-#define START 1
-#define WAITING 0
+// game status
+#define RUNNING 2
+#define WAITING 3
+#define START_GAME 5
+#define QUIT_GAME 4
+#define WIN 1
+#define LOSE -1
+#define TIE 0
+
+//game type
+#define COMPUTER 1
+#define PEOPLE 2
 
 #define NONE -1
 
-#define DEPTH 2//5
+#define DEPTH 5
+
+
 
 #endif
