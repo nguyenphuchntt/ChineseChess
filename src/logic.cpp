@@ -7,7 +7,6 @@ void ChineseChess::InitData(){
     xturn = DARK;
 
     exitQuerry = false;
-    sound_on = true;
 
     for (int i = 0; i < 50; i++){
         gen_begin[i] = 0;
@@ -33,6 +32,8 @@ void ChineseChess::InitData(){
 }
 
 void ChineseChess::init(){
+    sound_on = true;
+
     this->InitData();
 
     graphic.initSDL();

@@ -7,7 +7,7 @@ int main(int arg, char* argv[]){
     
     SDL_Event event;
     while (1){
-        game.graphic.prepareScene(game.status);
+        game.graphic.prepareScene(game.status, game.gameType);
         if (game.turn == DARK){
             game.processMove();
         }

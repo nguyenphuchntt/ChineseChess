@@ -28,12 +28,15 @@ void graphics::initSDL(){
     this->loadMedia();    
 }
 
-void graphics::prepareScene(int status){
+void graphics::prepareScene(int status, int typeGame){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
     SDL_RenderClear(renderer);    
     if (status == RUNNING || status == WIN || status == LOSE || status == OVER || status == WAITING){
         SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);  
         this->renderTexture(gamePicture[HINT], 627, 364);
+        if (typeGame == PEOPLE){
+            this->renderTexture(gamePicture[DIAGONAL_LINE], 627,374);
+        }
         this->renderTexture(gamePicture[UNDO], 623, 419);
         this->renderTexture(gamePicture[EXIT_QUERRY], 627, 521); 
     }
@@ -89,6 +92,7 @@ void graphics::loadMedia(){
     gamePicture.push_back(this->loadTexture("assets/img/win.png"));
     gamePicture.push_back(this->loadTexture("assets/img/music.png")); 
     gamePicture.push_back(this->loadTexture("assets/img/music_pause.png"));
+    gamePicture.push_back(this->loadTexture("assets/img/diagonalLine.png"));
 
     backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
 
@@ -170,11 +174,9 @@ void graphics::renderSoundButton(int gameStatus, bool soundStatus){
     if (gameStatus == QUIT_GAME || gameStatus == START_GAME){
         return;
     }
-    if (soundStatus){
-        this->renderTexture(gamePicture[MUSIC], 627, 473);
-    }
-    else{
-        this->renderTexture(gamePicture[MUSIC_PAUSE], 627, 473);
+    this->renderTexture(gamePicture[MUSIC], 627, 473);
+    if(!soundStatus){
+        this->renderTexture(gamePicture[DIAGONAL_LINE], 627, 473);
     }
 }
 

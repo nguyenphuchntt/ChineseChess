@@ -24,7 +24,8 @@ enum gamePicture {
     YOU_LOST,
     YOU_WON,
     MUSIC,
-    MUSIC_PAUSE
+    MUSIC_PAUSE,
+    DIAGONAL_LINE
 };
 
 enum gameAudio {

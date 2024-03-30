@@ -20,7 +20,7 @@ struct graphics{
     }
 
     void initSDL();
-    void prepareScene(int type);
+    void prepareScene(int type, int typeGame);
 
     void loadMedia();
     void freeMedia();
