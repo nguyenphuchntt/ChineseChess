@@ -31,16 +31,14 @@
 #define QUIT_GAME 4
 #define WIN 1
 #define LOSE -1
-#define TIE 0
+#define OVER 0
 
 //game type
 #define COMPUTER 1
 #define PEOPLE 2
 
-#define NONE -1
+#define NONE -100
 
-#define DEPTH 5
-
-
+#define DEPTH 2
 
 #endif

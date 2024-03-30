@@ -28,17 +28,16 @@ void graphics::initSDL(){
     this->loadMedia();    
 }
 
-void graphics::prepareScene(int type){
+void graphics::prepareScene(int status){
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
     SDL_RenderClear(renderer);    
-    if (type == RUNNING){
+    if (status == RUNNING || status == WIN || status == LOSE || status == OVER || status == WAITING){
         SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);  
         this->renderTexture(gamePicture[HINT], 627, 364);
         this->renderTexture(gamePicture[UNDO], 623, 419);
-        this->renderTexture(gamePicture[MUSIC], 627, 473);
-        this->renderTexture(gamePicture[MENU], 627, 521); 
+        this->renderTexture(gamePicture[EXIT_QUERRY], 627, 521); 
     }
-    if (type == START_GAME){
+    if (status == START_GAME){
         mouse.getMousePos();
         SDL_RenderCopy(renderer, gamePicture[START_BACK], NULL, NULL);
         if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
@@ -89,6 +88,7 @@ void graphics::loadMedia(){
     gamePicture.push_back(this->loadTexture("assets/img/lose.png")); 
     gamePicture.push_back(this->loadTexture("assets/img/win.png"));
     gamePicture.push_back(this->loadTexture("assets/img/music.png")); 
+    gamePicture.push_back(this->loadTexture("assets/img/music_pause.png"));
 
     backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
 
@@ -155,15 +155,41 @@ void graphics::play(Mix_Music* gMusic){
     if (Mix_PlayingMusic() == 0){
         Mix_PlayMusic(gMusic, -1);
     }
-    else if (Mix_PausedMusic() == 1){
-        Mix_ResumeMusic();
-    }
+    // else if (Mix_PausedMusic() == 1){
+    //     Mix_ResumeMusic();
+    // }
 }
 
 void graphics::play(Mix_Chunk* gChunk){
     if (gChunk != nullptr){
         Mix_PlayChannel(-1, gChunk, 0);
     }
+}
+
+void graphics::renderSoundButton(int gameStatus, bool soundStatus){
+    if (gameStatus == QUIT_GAME || gameStatus == START_GAME){
+        return;
+    }
+    if (soundStatus){
+        this->renderTexture(gamePicture[MUSIC], 627, 473);
+    }
+    else{
+        this->renderTexture(gamePicture[MUSIC_PAUSE], 627, 473);
+    }
+}
+
+void graphics::SwitchSoundStatus(){
+    if( Mix_PlayingMusic() == 0 ){
+        Mix_PlayMusic( backgrounMusic, -1 );
+    }else{
+        if( Mix_PausedMusic() == 1 ){
+            
+            Mix_ResumeMusic();
+        }else{
+            Mix_PauseMusic();
+        }
+    }
+    return;
 }
 
 SDL_Texture* graphics::renderText(const char* text, TTF_Font* font, SDL_Color textColor)
@@ -248,5 +274,36 @@ void graphics::displayChessPiece(const ChessPiece& chessPiece){
             renderChessPiece(n, chessPiece);       
         }
     }
+}
+
+void graphics::renderExit(bool exitQuerry){
+    if (!exitQuerry){
+        return;
+    }
+    this->mouse.getMousePos();
+    if (this->mouse.x > 185 && this->mouse.x < 222 && this->mouse.y > 373 && this->mouse.y < 409){
+        this->renderTexture(this->gamePicture[ORANGE_COLOR], 165, 353);
+        this->renderTexture(this->gamePicture[BROWN_COLOR], 365, 360);
+    }
+    else if (this->mouse.x > 373 && this->mouse.x < 410 && this->mouse.y > 373 && this->mouse.y < 409){
+        this->renderTexture(this->gamePicture[BROWN_COLOR], 165, 353);
+        this->renderTexture(this->gamePicture[ORANGE_COLOR], 365, 359);        
+    }
+    else {
+        this->renderTexture(this->gamePicture[BROWN_COLOR], 165, 353);
+        this->renderTexture(this->gamePicture[BROWN_COLOR], 365, 359);          
+    }
+    this->renderTexture(this->gamePicture[EXIT], 122, 257);
+}
+
+void graphics::renderTurnSquare(int status, int turn){
+    if (status != RUNNING){
+        return;
+    }
+    if (turn == LIGHT){
+        this->renderTexture(this->gamePicture[RED_SQUARE], 640, 586);
+        return;
+    }
+    this->renderTexture(this->gamePicture[BLACK_SQUARE], 640, 586);
 }
     

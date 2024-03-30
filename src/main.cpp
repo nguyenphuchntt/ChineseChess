@@ -1,31 +1,32 @@
 #include "../include/headers/logic.h"
 
-bool quit = false;
 
 int main(int arg, char* argv[]){
     ChineseChess game;
     game.init(); 
     
     SDL_Event event;
-    while (!quit){
+    while (1){
         game.graphic.prepareScene(game.status);
-        if (game.turn == DARK && game.gameType == ONE_PLAYER){
+        if (game.turn == DARK){
             game.processMove();
         }
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
-                quit = true;
+                game.status = QUIT_GAME;
             }
-            if (event.type == SDL_MOUSEBUTTONDOWN){
-                if ((game.turn == LIGHT && game.gameType == ONE_PLAYER) || game.gameType == TWO_PLAYER){
+            else if (event.type == SDL_MOUSEBUTTONDOWN){
+                if ((game.turn == LIGHT && game.gameType == COMPUTER) || game.gameType == PEOPLE){
                     game.getInput();
                 }
                 game.processClick();
             }
         }
-        // std::cout << game.status << " ";
         game.render();
         if (game.quit()) break;
+        // std::cout << game.exitQuerry << "status: " << game.status << std::endl;
+        // int x; int y;
+        // SDL_GetMouseState(&x, &y); std::cout << x << ' ' << y << std::endl;
     }
     return 0;
 }

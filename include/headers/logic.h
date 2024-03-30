@@ -17,12 +17,16 @@ struct ChineseChess{
     int status;
     int gameType;
 
-    short       gen_begin[50];    
-    short       gen_end[50];
+    bool exitQuerry;
+    bool sound_on;
 
-    MOVE        arMove[4096];
-    PMOVE       NewMove;
-    MOVEDATA    MoveData[50];
+
+    short*       gen_begin = new short[50];    
+    short*       gen_end = new short[50];
+
+    MOVE*        arMove = new MOVE[4096];
+    PMOVE        NewMove;
+    MOVEDATA*    MoveData = new MOVEDATA[50];
 
     int temp_Data[4] = {NONE};
 
@@ -34,7 +38,12 @@ struct ChineseChess{
     void init();
     void getInput();
     void render();
+
     void processClick();
+    void processMenu();
+    void exitGame();
+    void SetSoundStatus();
+    void getHint();
 
     bool move(int from, int dest);
     void unDoTest(int from, int dest);
@@ -56,6 +65,7 @@ struct ChineseChess{
     bool Lose();
 
     bool quit();
+    void InitData();
 };
 
 

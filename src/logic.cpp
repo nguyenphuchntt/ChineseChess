@@ -1,23 +1,39 @@
 #include "../include/headers/logic.h"
 
-void ChineseChess::init(){
+void ChineseChess::InitData(){
     status = START_GAME;
     gameType = WAITING;
     turn = LIGHT;
     xturn = DARK;
 
-    gen_begin[50] = { 0 };
-    gen_end[50] = { 0 };
+    exitQuerry = false;
+    sound_on = true;
 
-    arMove[4096] = { 0 };
-    MoveData[50] = { 0 };
+    for (int i = 0; i < 50; i++){
+        gen_begin[i] = 0;
+        gen_end[i] = 0;
+    }
+
+    MOVEDATA MoveData_[50] = {0};
+    for (int i = 0; i < 50; i++){
+        MoveData[i] = MoveData_[i];
+    }    
+
+    MOVE arMove_[4096] = {0};
+    for (int i = 0; i < 4096; i++){
+        arMove[i] = arMove_[i];
+    }
 
     NewMove = &(this->piece.Move);
 
     ply = 0;
     depth = DEPTH;
     alpha = -20000;
-    beta = 20000;
+    beta = 20000;    
+}
+
+void ChineseChess::init(){
+    this->InitData();
 
     graphic.initSDL();
     piece.init();
@@ -31,11 +47,27 @@ void ChineseChess::switchTurn(){
 }
 
 void ChineseChess::getInput(){
+    this->mouse.getMousePos();
     if (status == START_GAME){
         return;
     }
-    this->mouse.getMousePos();
+    
+    if (status == WAITING){
+        return;
+    }
+
     if (this->mouse.x < (BOARD_X - 20) || this->mouse.y < (BOARD_Y - 20) || this->mouse.x > 563 || this->mouse.y > 630){
+        if (mouse.x > 627 && mouse.x < 627+49 && mouse.y > 521 && mouse.y < 521+52){
+            exitQuerry = true;
+            this->status = WAITING;
+        }
+        if (mouse.x > 627 && mouse.x < 627+49 && mouse.y > 473 && mouse.y < 473+52){
+            this->graphic.SwitchSoundStatus();
+            sound_on = (sound_on == true) ? false : true;
+        }
+        if (mouse.x > 627 && mouse.x < 627+49 && mouse.y > 364 && mouse.y < 364+52){
+            this->getHint();
+        }
         return;
     }
     int clickedCol = (this->mouse.x - (BOARD_X-CELL_SIZE_X/2)) / (CELL_SIZE_X);
@@ -44,21 +76,52 @@ void ChineseChess::getInput(){
     this->piece.Move.dest = clickedRow * 9 + clickedCol;
 }
 
+void ChineseChess::processMenu(){
+    mouse.getMousePos();
+    if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 522 && mouse.y < 522+77){
+        this->status = QUIT_GAME;
+        this->quit();
+    }
+    else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
+        this->status = RUNNING;
+        this->gameType = COMPUTER;
+    }
+    else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 445 && mouse.y < 445+77){
+        this->status = RUNNING;
+        this->gameType = PEOPLE;
+    }
+}
+
+void ChineseChess::getHint(){
+    this->processMove();
+}
+
+void ChineseChess::exitGame(){
+    if (!exitQuerry){
+        return;
+    }
+    if (this->mouse.x > 185 && this->mouse.x < 222 && this->mouse.y > 373 && this->mouse.y < 409){
+        status = RUNNING;
+        exitQuerry = false;
+    }   
+    else if (this->mouse.x > 373 && this->mouse.x < 410 && this->mouse.y > 373 && this->mouse.y < 409){
+        status = START_GAME;
+        piece.init();
+        this->InitData();
+    }
+
+}
+
+
 void ChineseChess::processClick(){
     if (status == START_GAME){
-        mouse.getMousePos();
-        if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 522 && mouse.y < 522+77){
-            this->status = QUIT_GAME;
-            this->quit();
-        }
-        else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
-            this->status = RUNNING;
-            this->gameType = ONE_PLAYER;
-        }
-        else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 445 && mouse.y < 445+77){
-            this->status = RUNNING;
-            this->gameType = TWO_PLAYER;
-        }
+        this->processMenu();
+        return;
+    }
+    if (status == OVER){
+        return;
+    }
+    if (status == WAITING){
         return;
     }
     if (this->piece.pieceColor[this->piece.Move.dest] == turn){
@@ -80,7 +143,7 @@ void ChineseChess::processClick(){
 bool ChineseChess::move(int from, int dest){
     if (this->ValidStep(from, dest))
     {   
-        this->status = this->getStatus();
+        status = this->getStatus();
         if (this->piece.pieceColor[this->piece.Move.dest] == EMPTY){
             this->graphic.play(this->graphic.gameAudio[MOVE_SOUND]);
         }else{
@@ -121,17 +184,19 @@ void ChineseChess::doTest(int from, int dest){
 }
 
 int ChineseChess::getStatus(){
-    if (this->piece.piecePos[this->piece.Move.dest] != KING){
-        return RUNNING;
-    }
-    if (this->piece.piecePos[this->piece.Move.dest] != KING){
+    if (status == WAITING){
         return WAITING;
     }
-    if (this->piece.pieceColor[this->piece.Move.dest] == LIGHT){
-        return LOSE;
+    if (this->piece.piecePos[this->piece.Move.dest] != KING){
+        return this->status;
     }
-    return WIN;
-
+    if (this->piece.piecePos[this->piece.Move.dest] == KING){
+        if (this->piece.pieceColor[this->piece.Move.dest] == LIGHT){
+            return LOSE;
+        }
+        return WIN;
+    }
+    return NONE;
 }
 
 bool ChineseChess::isOver(){
@@ -158,6 +223,7 @@ bool ChineseChess::quit(){
     if (this->status != QUIT_GAME){
         return false;
     }
+    this->~ChineseChess();
     this->graphic.QuitSDL();
     return true;
 }
@@ -174,7 +240,7 @@ bool ChineseChess::ValidStep(int from, int dest){
 
 
 void ChineseChess::processMove(){
-    if (status == START_GAME){
+    if (status == START_GAME || gameType == PEOPLE || status == OVER){
         return;
     }
     this->AlphaBeta(alpha, beta, depth);
@@ -184,14 +250,17 @@ void ChineseChess::processMove(){
 }
 
 void ChineseChess::render(){
-    if (this->status == RUNNING){
+    if (status == RUNNING || status == WIN || status == LOSE || status == OVER || status == WAITING){
         this->graphic.displayChessPiece(this->piece);  
-        if (turn == LIGHT && status == RUNNING){
-            this->graphic.renderTexture(graphic.gamePicture[RED_SQUARE], 640, 586);
+        if (this->status == WIN || this->status == LOSE){
+            status = OVER;
         }
-        else {
-            this->graphic.renderTexture(graphic.gamePicture[BLACK_SQUARE], 640, 586);
-        }      
+        graphic.renderTurnSquare(status, turn);
+        graphic.renderExit(exitQuerry);
+        graphic.renderSoundButton(status, sound_on);
+        if (status == WAITING){
+            this->exitGame();
+        }
     }
     SDL_RenderPresent(this->graphic.renderer);
 }

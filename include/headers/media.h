@@ -12,7 +12,7 @@ enum gamePicture {
     CHESSPIECE,
     GAME_OVER,
     HINT,
-    MENU,
+    EXIT_QUERRY,
     SELECT,
     ORANGE_COLOR,
     QUIT,
@@ -23,7 +23,8 @@ enum gamePicture {
     UNSELECT_MENU,
     YOU_LOST,
     YOU_WON,
-    MUSIC
+    MUSIC,
+    MUSIC_PAUSE
 };
 
 enum gameAudio {

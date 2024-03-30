@@ -31,9 +31,16 @@ struct graphics{
     Mix_Chunk* loadSound(const char* path);
     void play(Mix_Chunk* gChunk);
     void play(Mix_Music* gMusic);
+    void SwitchSoundStatus();
 
     SDL_Texture* renderText(const char* text, TTF_Font* font, SDL_Color textColor);
     void renderTexture(SDL_Texture* texture, int x, int y);
+    void renderExit(bool exitQuerry);
+    void renderTurnSquare(int status, int turn);
+    void renderSoundButton(int gameStatus, bool soundStatus);
+    void renderHintButton(int gameStatus);
+    void renderUndoButton(int gameStatus);
+    
     
     void QuitSDL();
 
