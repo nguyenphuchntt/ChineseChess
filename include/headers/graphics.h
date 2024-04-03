@@ -9,10 +9,15 @@
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
-    std::vector<SDL_Texture*> gamePicture;
-    std::vector<Mix_Chunk*> gameAudio;
     Mix_Music* backgrounMusic = NULL;
     TTF_Font* gFont = NULL;
+
+    std::vector<SDL_Texture*> gamePicture;
+    std::vector<Mix_Chunk*> gameAudio;
+    std::string pieceStepToRenderText[15] = {""};
+    std::vector<SDL_Texture*> gameStep = {15, NULL};
+    SDL_Color RED = {255, 0, 0, 255};
+    SDL_Color BLACK = {0,0,0,255};
 
     Mouse mouse;
 
@@ -40,7 +45,10 @@ struct graphics{
     void renderSoundButton(int gameStatus, bool soundStatus);
     void renderHintButton(int gameStatus);
     void renderUndoButton(int gameStatus);
-    
+    void renderOverPopUp(int gameStatus);
+
+    void MoveToText(int from, int dest, int pieceType, int side);
+    void displayText();
     
     void QuitSDL();
 

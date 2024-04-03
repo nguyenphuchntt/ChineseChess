@@ -16,7 +16,10 @@ int main(int arg, char* argv[]){
                 game.status = QUIT_GAME;
             }
             else if (event.type == SDL_MOUSEBUTTONDOWN){
-                if ((game.turn == LIGHT && game.gameType == COMPUTER) || game.gameType == PEOPLE){
+                if (( game.turn == LIGHT && game.gameType == COMPUTER) 
+                   || game.gameType == PEOPLE
+                   || game.status == WIN || game.status == LOSE)
+                {
                     game.getInput();
                 }
                 game.processClick();
@@ -24,7 +27,7 @@ int main(int arg, char* argv[]){
         }
         game.render();
         if (game.quit()) break;
-        // std::cout << game.exitQuerry << "status: " << game.status << std::endl;
+        // std::cout << "status: " << game.status << " game type: " << game.gameType << std::endl;
         // int x; int y;
         // SDL_GetMouseState(&x, &y); std::cout << x << ' ' << y << std::endl;
     }

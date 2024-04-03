@@ -99,7 +99,7 @@ void graphics::loadMedia(){
     gameAudio.push_back(this->loadSound("assets/audio/kill_sound.wav"));
     gameAudio.push_back(this->loadSound("assets/audio/move_sound.wav"));
 
-    gFont = this->loadFont("assets/font/thuPhap.ttf", 200);
+    gFont = this->loadFont("assets/font/Vnvietay.ttf", 18);
     std::cout << "loaded media!" << std::endl;
 }
 
@@ -308,4 +308,103 @@ void graphics::renderTurnSquare(int status, int turn){
     }
     this->renderTexture(this->gamePicture[BLACK_SQUARE], 640, 586);
 }
-    
+
+void graphics::renderOverPopUp(int status){
+    this->mouse.getMousePos();
+    if (this->mouse.x > 286 && this->mouse.x < 323 && this->mouse.y > 380 && this->mouse.y < 417){
+        this->renderTexture(this->gamePicture[ORANGE_COLOR], 266, 360);
+    }   
+    else this->renderTexture(this->gamePicture[BROWN_COLOR], 266, 360); 
+    this->renderTexture(gamePicture[GAME_OVER], 122, 257);
+    if (status == WIN){
+        this->renderTexture(gamePicture[YOU_WON], 185, 285);
+        return;
+    }
+    this->renderTexture(gamePicture[YOU_LOST], 160, 295);
+}
+
+
+void graphics::MoveToText(int from, int dest, int pieceType, int side){
+    std::string turn;
+    if (side == LIGHT){
+        turn = "LIGHT: ";
+    }else turn = "DARK: ";
+    char kindOfPiece;
+    switch (pieceType){
+    case KING:
+        kindOfPiece = 'T';
+        break;
+    case BISHOP:
+        kindOfPiece = 'B';
+        break;
+    case ELEPHANT:
+        kindOfPiece = 'E';
+        break;
+    case KNIGHT:
+        kindOfPiece = 'K';
+        break;
+    case PAWN:
+        kindOfPiece = 'P';
+        break;
+    case CANNON:
+        kindOfPiece = 'C';
+        break;
+    case ROOK:
+        kindOfPiece = 'R';
+        break;
+    default:
+        kindOfPiece = '?';
+        break;
+    }
+    std::string temp = "";
+    int col_from = (from % 9) + 1;
+    int row_from = (from / 9) + 1;
+    int col_dest = (dest % 9) + 1;
+    int row_dest = (dest / 9) + 1;    
+    if (side == DARK){
+        col_from = 10 - col_from;
+        row_from = 11 - row_from;
+        row_dest = 11 - row_dest;
+        col_dest = 10 - col_dest;
+    }
+    if (pieceType == KNIGHT || pieceType == BISHOP || pieceType == ELEPHANT){  
+        if (row_from > row_dest){
+            temp = turn + kindOfPiece + std::to_string(col_from) + '.' + std::to_string(col_dest);
+        }else if (row_from == row_dest){
+            temp = turn + kindOfPiece + std::to_string(col_from) + '-' + std::to_string(col_dest);
+        }else{
+            temp = turn + kindOfPiece + std::to_string(col_from) + '/' + std::to_string(col_dest);
+        }
+    }
+    else {
+        if (row_from > row_dest){
+            temp = turn + kindOfPiece + std::to_string(col_from) + '.' + std::to_string(abs(row_dest-row_from));
+        }else if (row_from == row_dest){
+            temp = turn + kindOfPiece + std::to_string(col_from) + '-' + std::to_string(abs(col_dest));
+        }else{
+            temp = turn + kindOfPiece + std::to_string(col_from) + '/' + std::to_string(abs(row_from-row_dest));
+        }        
+    }
+    for (int i = 0; i < 14; i++){
+        pieceStepToRenderText[i] = pieceStepToRenderText[i+1];
+    }
+    pieceStepToRenderText[7] = temp;
+    for (int i = 0; i < 15; i++){
+        if (pieceStepToRenderText[i] != ""){
+            gameStep[i] = renderText(pieceStepToRenderText[i].c_str(), gFont, BLACK);
+        }
+    }
+    // std::cout << "------------------------";
+    // for (int i = 0; i < 8; i++){
+    //     std::cout << pieceStepToRenderText[i] << std::endl;
+    // }
+    // std::cout << "------------------------";
+}
+
+void graphics::displayText(){
+    for (int i = 0; i < 15; i++){
+        if (gameStep[i] != NULL){
+            renderTexture(gameStep[i], 608, 110+i*24);
+        } 
+    }
+}

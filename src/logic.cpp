@@ -16,7 +16,7 @@ void ChineseChess::InitData(){
     MOVEDATA MoveData_[50] = {0};
     for (int i = 0; i < 50; i++){
         MoveData[i] = MoveData_[i];
-    }    
+    }
 
     MOVE arMove_[4096] = {0};
     for (int i = 0; i < 4096; i++){
@@ -24,6 +24,11 @@ void ChineseChess::InitData(){
     }
 
     NewMove = &(this->piece.Move);
+
+    for (int i = 0; i < 15; i++){
+        graphic.pieceStepToRenderText[i] = "";
+        graphic.gameStep[i] = NULL;
+    }
 
     ply = 0;
     depth = DEPTH;
@@ -39,7 +44,6 @@ void ChineseChess::init(){
     graphic.initSDL();
     piece.init();
     piece.texture = this->graphic.gamePicture[CHESSPIECE];
-
 }
 
 void ChineseChess::switchTurn(){
@@ -84,7 +88,7 @@ void ChineseChess::processMenu(){
         this->quit();
     }
     else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
-        this->status = RUNNING;
+        this->status = RUNNING;// bug
         this->gameType = COMPUTER;
     }
     else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 445 && mouse.y < 445+77){
@@ -98,19 +102,26 @@ void ChineseChess::getHint(){
 }
 
 void ChineseChess::exitGame(){
+    if (status == WIN || status == LOSE){
+        if (this->mouse.x > 286 && this->mouse.x < 323 && this->mouse.y > 380 && this->mouse.y < 417){
+            piece.init();
+            this->InitData();
+        }
+        return;
+    }
+
     if (!exitQuerry){
         return;
     }
+
     if (this->mouse.x > 185 && this->mouse.x < 222 && this->mouse.y > 373 && this->mouse.y < 409){
         status = RUNNING;
         exitQuerry = false;
     }   
     else if (this->mouse.x > 373 && this->mouse.x < 410 && this->mouse.y > 373 && this->mouse.y < 409){
-        status = START_GAME;
         piece.init();
         this->InitData();
     }
-
 }
 
 
@@ -119,7 +130,7 @@ void ChineseChess::processClick(){
         this->processMenu();
         return;
     }
-    if (status == OVER){
+    if (status == WIN || status == LOSE){
         return;
     }
     if (status == WAITING){
@@ -137,7 +148,6 @@ void ChineseChess::processClick(){
             this->move(this->piece.Move.from, this->piece.Move.dest);
             this->piece.Move = {NONE, NONE};
         }        
-
     }
 }
 
@@ -150,6 +160,8 @@ bool ChineseChess::move(int from, int dest){
         }else{
             this->graphic.play(this->graphic.gameAudio[KILL_SOUND]);
         }
+
+        this->graphic.MoveToText(from, dest, this->piece.piecePos[from], turn);
 
         this->piece.piecePos[dest] =  this->piece.piecePos[from];   
         this->piece.piecePos[from] = EMPTY;
@@ -188,16 +200,13 @@ int ChineseChess::getStatus(){
     if (status == WAITING){
         return WAITING;
     }
-    if (this->piece.piecePos[this->piece.Move.dest] != KING){
-        return this->status;
-    }
     if (this->piece.piecePos[this->piece.Move.dest] == KING){
         if (this->piece.pieceColor[this->piece.Move.dest] == LIGHT){
             return LOSE;
         }
         return WIN;
     }
-    return NONE;
+    return this->status;
 }
 
 bool ChineseChess::isOver(){
@@ -241,7 +250,7 @@ bool ChineseChess::ValidStep(int from, int dest){
 
 
 void ChineseChess::processMove(){
-    if (status == START_GAME || gameType == PEOPLE || status == OVER){
+    if (status == START_GAME || gameType == PEOPLE || status == WIN || status == LOSE){
         return;
     }
     this->AlphaBeta(alpha, beta, depth);
@@ -251,15 +260,16 @@ void ChineseChess::processMove(){
 }
 
 void ChineseChess::render(){
-    if (status == RUNNING || status == WIN || status == LOSE || status == OVER || status == WAITING){
-        this->graphic.displayChessPiece(this->piece);  
-        if (this->status == WIN || this->status == LOSE){
-            status = OVER;
-        }
+    if (status == RUNNING || status == WIN || status == LOSE || status == WAITING){
+        graphic.displayChessPiece(this->piece);  
         graphic.renderTurnSquare(status, turn);
         graphic.renderExit(exitQuerry);
         graphic.renderSoundButton(status, sound_on);
-        if (status == WAITING){
+        graphic.displayText();
+        if (status == WIN || status == LOSE){
+            this->graphic.renderOverPopUp(status);
+        }
+        if (status == WAITING || status == WIN || status == LOSE){
             this->exitGame();
         }
     }
