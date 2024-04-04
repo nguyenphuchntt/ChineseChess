@@ -9,9 +9,9 @@
 
 struct ChineseChess{
 
-    ChessPiece piece;
-    graphics graphic;
-    Mouse mouse;
+    ChessPiece* piece;
+    graphics* graphic;
+    Mouse* mouse;
 
     int turn; int xturn;
     int status;
@@ -35,6 +35,7 @@ struct ChineseChess{
 
     short alpha, beta;
 
+    void InitData();
     void init();
     void getInput();
     void render();
@@ -65,7 +66,7 @@ struct ChineseChess{
     bool Lose();
 
     bool quit();
-    void InitData();
+    ~ChineseChess();
 };
 
 

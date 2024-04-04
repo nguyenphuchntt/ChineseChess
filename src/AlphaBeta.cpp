@@ -7,10 +7,10 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         short   piecevalue[8] = {0, 10, 25, 20, 40, 45, 90, 1000};
         short   iEval = 0;
         for (short i = 0; i < 90; i++){ // evaluate
-        if (this->piece.pieceColor[i] == turn)
-            iEval += piecevalue[this->piece.piecePos[i]];
-        else if (this->piece.pieceColor[i] == xturn)
-            iEval -= piecevalue[this->piece.piecePos[i]];
+        if (this->piece->pieceColor[i] == turn)
+            iEval += piecevalue[this->piece->piecePos[i]];
+        else if (this->piece->pieceColor[i] == xturn)
+            iEval -= piecevalue[this->piece->piecePos[i]];
         }
         return iEval;           
     }
@@ -27,13 +27,13 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
 
         MoveData[hdp].dest = arMove[i].dest;
         MoveData[hdp].from = arMove[i].from;
-        MoveData[hdp].capture = this->piece.piecePos[dest];
-        p = this->piece.piecePos[dest];
+        MoveData[hdp].capture = this->piece->piecePos[dest];
+        p = this->piece->piecePos[dest];
 
-        this->piece.piecePos[dest] = this->piece.piecePos[from];
-        this->piece.piecePos[from] = EMPTY;
-        this->piece.pieceColor[dest] = this->piece.pieceColor[from];
-        this->piece.pieceColor[from] = EMPTY;
+        this->piece->piecePos[dest] = this->piece->piecePos[from];
+        this->piece->piecePos[from] = EMPTY;
+        this->piece->pieceColor[dest] = this->piece->pieceColor[from];
+        this->piece->pieceColor[from] = EMPTY;
         
         hdp++;
         ply++;
@@ -51,14 +51,14 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         from = MoveData[hdp].from;
         dest = MoveData[hdp].dest;
 
-        this->piece.piecePos[from] = this->piece.piecePos[dest];
-        this->piece.pieceColor[from] = this->piece.pieceColor[dest];
-        this->piece.piecePos[dest] = MoveData[hdp].capture;
+        this->piece->piecePos[from] = this->piece->piecePos[dest];
+        this->piece->pieceColor[from] = this->piece->pieceColor[dest];
+        this->piece->piecePos[dest] = MoveData[hdp].capture;
 
-        if (this->piece.piecePos[dest] == EMPTY){
-            this->piece.pieceColor[dest] = EMPTY;
+        if (this->piece->piecePos[dest] == EMPTY){
+            this->piece->pieceColor[dest] = EMPTY;
         }else{
-            this->piece.pieceColor[dest] = xturn;
+            this->piece->pieceColor[dest] = xturn;
         }
 
         if (value > best){

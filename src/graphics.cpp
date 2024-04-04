@@ -234,7 +234,7 @@ void graphics::QuitSDL(){
     SDL_Quit();
 }
 
-void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
+void graphics::renderChessPiece(int n, const ChessPiece* chessPiece) {
     int i = n / 9;
     int j = n % 9;
     SDL_Rect dst;
@@ -244,19 +244,19 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
     dst.h = 60;
     // std::cout << n << " " << dst.x << " " << dst.y;
     SDL_Rect src;
-    if (chessPiece.pieceColor[n] == LIGHT){
-        src.x = chessPiece.lightPos[chessPiece.piecePos[n]-1][0];
-        src.y = chessPiece.lightPos[chessPiece.piecePos[n]-1][1];
-        src.w = chessPiece.lightPos[chessPiece.piecePos[n]-1][2];
-        src.h = chessPiece.lightPos[chessPiece.piecePos[n]-1][3];
+    if (chessPiece->pieceColor[n] == LIGHT){
+        src.x = chessPiece->lightPos[chessPiece->piecePos[n]-1][0];
+        src.y = chessPiece->lightPos[chessPiece->piecePos[n]-1][1];
+        src.w = chessPiece->lightPos[chessPiece->piecePos[n]-1][2];
+        src.h = chessPiece->lightPos[chessPiece->piecePos[n]-1][3];
     }
     else {
-        src.x = chessPiece.darkPos[chessPiece.piecePos[n]-1][0];
-        src.y = chessPiece.darkPos[chessPiece.piecePos[n]-1][1];
-        src.w = chessPiece.darkPos[chessPiece.piecePos[n]-1][2];
-        src.h = chessPiece.darkPos[chessPiece.piecePos[n]-1][3];
+        src.x = chessPiece->darkPos[chessPiece->piecePos[n]-1][0];
+        src.y = chessPiece->darkPos[chessPiece->piecePos[n]-1][1];
+        src.w = chessPiece->darkPos[chessPiece->piecePos[n]-1][2];
+        src.h = chessPiece->darkPos[chessPiece->piecePos[n]-1][3];
     }
-    if (n == chessPiece.Move.from && chessPiece.Move.from != NONE){
+    if (n == chessPiece->Move.from && chessPiece->Move.from != NONE){
         SDL_Rect d;
         d.x = BOARD_X + j * CELL_SIZE_X - 32;
         d.y = BOARD_Y + i * CELL_SIZE_Y  - 32;
@@ -266,13 +266,13 @@ void graphics::renderChessPiece(int n, const ChessPiece& chessPiece) {
     }
     // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
     // SDL_QueryTexture(chessPiece.texture, NULL, NULL, &dst.w, &dst.h);
-    SDL_RenderCopy(renderer, chessPiece.texture, &src, &dst);
+    SDL_RenderCopy(renderer, chessPiece->texture, &src, &dst);
     // std::cout << std::endl;
 }
 
-void graphics::displayChessPiece(const ChessPiece& chessPiece){
+void graphics::displayChessPiece(const ChessPiece* chessPiece){
     for (int n = 0; n < 90; n++){
-        if ((chessPiece.pieceColor[n] == LIGHT) || (chessPiece.pieceColor[n] == DARK)){
+        if ((chessPiece->pieceColor[n] == LIGHT) || (chessPiece->pieceColor[n] == DARK)){
             renderChessPiece(n, chessPiece);       
         }
     }
@@ -388,23 +388,18 @@ void graphics::MoveToText(int from, int dest, int pieceType, int side){
     for (int i = 0; i < 14; i++){
         pieceStepToRenderText[i] = pieceStepToRenderText[i+1];
     }
-    pieceStepToRenderText[7] = temp;
+    pieceStepToRenderText[14] = temp;
     for (int i = 0; i < 15; i++){
         if (pieceStepToRenderText[i] != ""){
             gameStep[i] = renderText(pieceStepToRenderText[i].c_str(), gFont, BLACK);
         }
     }
-    // std::cout << "------------------------";
-    // for (int i = 0; i < 8; i++){
-    //     std::cout << pieceStepToRenderText[i] << std::endl;
-    // }
-    // std::cout << "------------------------";
 }
 
 void graphics::displayText(){
     for (int i = 0; i < 15; i++){
         if (gameStep[i] != NULL){
-            renderTexture(gameStep[i], 608, 110+i*24);
+            renderTexture(gameStep[i], 608, 5+i*24);
         } 
     }
 }

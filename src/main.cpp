@@ -1,13 +1,22 @@
 #include "../include/headers/logic.h"
 
+Mouse gMouse;
+graphics gGraphic;
+ChessPiece gPiece;
+
 
 int main(int arg, char* argv[]){
-    ChineseChess game;
+    
+ChineseChess game;
+game.graphic = &gGraphic;
+game.piece = &gPiece;
+game.mouse = &gMouse;
+
     game.init(); 
     
     SDL_Event event;
     while (1){
-        game.graphic.prepareScene(game.status, game.gameType);
+        game.graphic->prepareScene(game.status, game.gameType);
         if (game.turn == DARK){
             game.processMove();
         }

@@ -39,6 +39,6 @@
 
 #define NONE -100
 
-#define DEPTH 2
+#define DEPTH 5
 
 #endif

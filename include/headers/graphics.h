@@ -16,6 +16,7 @@ struct graphics{
     std::vector<Mix_Chunk*> gameAudio;
     std::string pieceStepToRenderText[15] = {""};
     std::vector<SDL_Texture*> gameStep = {15, NULL};
+
     SDL_Color RED = {255, 0, 0, 255};
     SDL_Color BLACK = {0,0,0,255};
 
@@ -52,8 +53,8 @@ struct graphics{
     
     void QuitSDL();
 
-    void renderChessPiece(int n, const ChessPiece& chessPiece);
-    void displayChessPiece(const ChessPiece& chessPiece);
+    void renderChessPiece(int n, const ChessPiece* chessPiece);
+    void displayChessPiece(const ChessPiece* chessPiece);
 };
 
 #endif
