@@ -41,17 +41,17 @@ void graphics::prepareScene(int status, int typeGame){
         this->renderTexture(gamePicture[EXIT_QUERRY], 627, 521); 
     }
     if (status == START_GAME){
-        mouse.getMousePos();
+        mouse->getMousePos();
         SDL_RenderCopy(renderer, gamePicture[START_BACK], NULL, NULL);
-        if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 362 && mouse.y < 362+77){
+        if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 362 && mouse->y < 362+77){
             this->renderTexture(gamePicture[SELECT_MENU], 240+10, 362);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
-        }else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 445 && mouse.y < 445+77){
+        }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 445 && mouse->y < 445+77){
             this->renderTexture(gamePicture[SELECT_MENU], 240+10, 445);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
-        }else if (mouse.x > 240 && mouse.x < 240+228 && mouse.y > 522 && mouse.y < 522+77){
+        }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 522 && mouse->y < 522+77){
             this->renderTexture(gamePicture[SELECT_MENU], 240+10, 522);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
             this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
@@ -282,12 +282,12 @@ void graphics::renderExit(bool exitQuerry){
     if (!exitQuerry){
         return;
     }
-    this->mouse.getMousePos();
-    if (this->mouse.x > 185 && this->mouse.x < 222 && this->mouse.y > 373 && this->mouse.y < 409){
+    this->mouse->getMousePos();
+    if (this->mouse->x > 185 && this->mouse->x < 222 && this->mouse->y > 373 && this->mouse->y < 409){
         this->renderTexture(this->gamePicture[ORANGE_COLOR], 165, 353);
         this->renderTexture(this->gamePicture[BROWN_COLOR], 365, 360);
     }
-    else if (this->mouse.x > 373 && this->mouse.x < 410 && this->mouse.y > 373 && this->mouse.y < 409){
+    else if (this->mouse->x > 373 && this->mouse->x < 410 && this->mouse->y > 373 && this->mouse->y < 409){
         this->renderTexture(this->gamePicture[BROWN_COLOR], 165, 353);
         this->renderTexture(this->gamePicture[ORANGE_COLOR], 365, 359);        
     }
@@ -310,8 +310,8 @@ void graphics::renderTurnSquare(int status, int turn){
 }
 
 void graphics::renderOverPopUp(int status){
-    this->mouse.getMousePos();
-    if (this->mouse.x > 286 && this->mouse.x < 323 && this->mouse.y > 380 && this->mouse.y < 417){
+    this->mouse->getMousePos();
+    if (this->mouse->x > 286 && this->mouse->x < 323 && this->mouse->y > 380 && this->mouse->y < 417){
         this->renderTexture(this->gamePicture[ORANGE_COLOR], 266, 360);
     }   
     else this->renderTexture(this->gamePicture[BROWN_COLOR], 266, 360); 

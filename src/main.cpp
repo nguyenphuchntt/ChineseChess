@@ -5,14 +5,15 @@ graphics gGraphic;
 ChessPiece gPiece;
 
 
+
 int main(int arg, char* argv[]){
     
 ChineseChess game;
-game.graphic = &gGraphic;
-game.piece = &gPiece;
-game.mouse = &gMouse;
-
-    game.init(); 
+    game.graphic = &gGraphic;
+    game.piece = &gPiece;
+    game.mouse = &gMouse;
+    gGraphic.mouse = &gMouse;
+    game.init();
     
     SDL_Event event;
     while (1){
@@ -36,9 +37,6 @@ game.mouse = &gMouse;
         }
         game.render();
         if (game.quit()) break;
-        // std::cout << "status: " << game.status << " game type: " << game.gameType << std::endl;
-        // int x; int y;
-        // SDL_GetMouseState(&x, &y); std::cout << x << ' ' << y << std::endl;
     }
     return 0;
 }

@@ -20,7 +20,7 @@ struct graphics{
     SDL_Color RED = {255, 0, 0, 255};
     SDL_Color BLACK = {0,0,0,255};
 
-    Mouse mouse;
+    Mouse* mouse;
 
     graphics(){
     }
