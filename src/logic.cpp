@@ -86,7 +86,7 @@ void ChineseChess::processMenu(){
         quit();
     }
     else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 362 && mouse->y < 362+77){
-        status = RUNNING;// bug
+        status = RUNNING;
         gameType = COMPUTER;
     }
     else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 445 && mouse->y < 445+77){
@@ -128,12 +128,12 @@ void ChineseChess::processClick(){
         processMenu();
         return;
     }
-    if (status == WIN || status == LOSE){
+
+    if (status == WAITING || status == WIN || status == LOSE){
+        this->exitGame();
         return;
     }
-    if (status == WAITING){
-        return;
-    }
+    
     if (piece->pieceColor[piece->Move.dest] == turn){
         if (piece->Move.from == piece->Move.dest){
             piece->Move = {NONE, NONE};
@@ -231,7 +231,7 @@ bool ChineseChess::quit(){
     if (status != QUIT_GAME){
         return false;
     }
-    // ~ChineseChess();
+    this->~ChineseChess();
     graphic->QuitSDL();
     return true;
 }
@@ -267,9 +267,9 @@ void ChineseChess::render(){
         if (status == WIN || status == LOSE){
             graphic->renderOverPopUp(status);
         }
-        if (status == WAITING || status == WIN || status == LOSE){
-            exitGame();
-        }
+        // if (status == WAITING || status == WIN || status == LOSE){
+        //     this->exitGame();
+        // }
     }
     SDL_RenderPresent(graphic->renderer);
 }

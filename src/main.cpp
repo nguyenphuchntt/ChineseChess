@@ -3,12 +3,10 @@
 Mouse gMouse;
 graphics gGraphic;
 ChessPiece gPiece;
-
-
+ChineseChess game;
 
 int main(int arg, char* argv[]){
     
-ChineseChess game;
     game.graphic = &gGraphic;
     game.piece = &gPiece;
     game.mouse = &gMouse;
@@ -36,6 +34,7 @@ ChineseChess game;
             }
         }
         game.render();
+        // std::cout << game.status << std::endl;
         if (game.quit()) break;
     }
     return 0;
