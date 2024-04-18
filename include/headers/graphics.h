@@ -4,7 +4,7 @@
 
 #include "media.h"
 #include "chessPiece.h"
-#include "function.h"
+#include "exception.h"
 #include "mouse.h"
 struct graphics{
     SDL_Window* window = NULL; 
@@ -47,6 +47,7 @@ struct graphics{
     void renderHintButton(int gameStatus);
     void renderUndoButton(int gameStatus);
     void renderOverPopUp(int gameStatus);
+    void renderStartMenu();
 
     void MoveToText(int from, int dest, int pieceType, int side);
     void displayText();

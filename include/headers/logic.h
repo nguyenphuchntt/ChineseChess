@@ -52,10 +52,14 @@ struct ChineseChess{
 
 
     void gen();
+    int iValuate();
     bool KingFaceCheck(short from, short dest);
-    short AlphaBeta(short alpha, short beta, short depth);
-    void processMove();
+    void KnightCheck(int from, int dest, int currDirection);
+    void ElephantCheck(int from, int dest, int currDirection);
 
+    short AlphaBeta(short alpha, short beta, short depth);
+
+    void processMove();
     bool ValidStep(int from, int dest);
 
     void switchTurn();

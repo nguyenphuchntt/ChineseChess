@@ -10,7 +10,7 @@ typedef struct
 {
     int   from, dest;
     int   capture; // type of chesspiece
-} MOVEDATA, *PMOVEDATA;
+} MOVEDATA, *PMOVEDATA; // MOVEDATA and the poiter to it
 
 
 #endif

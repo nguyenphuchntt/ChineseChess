@@ -1,17 +1,10 @@
 #include "../include/headers/logic.h"
-
+// alpha is the side that want to minimize the score
 short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
     static short hdp;
     short value, best;
     if (!depth){
-        short   piecevalue[8] = {0, 10, 25, 20, 40, 45, 90, 1000};
-        short   iEval = 0;
-        for (short i = 0; i < 90; i++){ // evaluate
-        if (this->piece->pieceColor[i] == turn)
-            iEval += piecevalue[this->piece->piecePos[i]];
-        else if (this->piece->pieceColor[i] == xturn)
-            iEval -= piecevalue[this->piece->piecePos[i]];
-        }
+        short   iEval = iValuate();
         return iEval;           
     }
     this->gen();
@@ -25,11 +18,11 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         from = arMove[i].from;
         dest = arMove[i].dest;
 
-        MoveData[hdp].dest = arMove[i].dest;
+        MoveData[hdp].dest = arMove[i].dest; // add to stack
         MoveData[hdp].from = arMove[i].from;
-        MoveData[hdp].capture = this->piece->piecePos[dest];
         p = this->piece->piecePos[dest];
-
+        MoveData[hdp].capture = p;
+        
         this->piece->piecePos[dest] = this->piece->piecePos[from];
         this->piece->piecePos[from] = EMPTY;
         this->piece->pieceColor[dest] = this->piece->pieceColor[from];
@@ -39,7 +32,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         ply++;
         this->switchTurn();
         if (p == KING){
-            value = 1000 - ply;
+            value = 1000 - ply; // huge score -> save this score
         }else{
             value = - AlphaBeta(-beta, -alpha, depth-1);
         }
@@ -61,6 +54,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
             this->piece->pieceColor[dest] = xturn;
         }
 
+        //
         if (value > best){
             best = value;
             if (!ply){
@@ -68,7 +62,18 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
                 NewMove->from = arMove[i].from;
             }
         }
-
     }
     return best;
+}
+
+int ChineseChess::iValuate(){
+    int iEval = 0;
+    short   piecevalue[8] = {0, 10, 25, 20, 40, 45, 90, 1000};
+    for (short i = 0; i < 90; i++){ // evaluate
+    if (this->piece->pieceColor[i] == turn)
+        iEval += piecevalue[this->piece->piecePos[i]];
+    else if (this->piece->pieceColor[i] == xturn)
+        iEval -= piecevalue[this->piece->piecePos[i]];
+    }
+    return iEval;
 }

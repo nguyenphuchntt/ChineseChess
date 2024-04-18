@@ -232,6 +232,7 @@ bool ChineseChess::quit(){
         return false;
     }
     this->~ChineseChess();
+    this->piece->~ChessPiece();
     graphic->QuitSDL();
     return true;
 }
@@ -275,5 +276,12 @@ void ChineseChess::render(){
 }
 
 ChineseChess::~ChineseChess(){
+    delete[] arMove;
+    arMove = NULL;
 
+    delete[] MoveData;
+    MoveData = NULL;
+
+    delete NewMove;
+    NewMove = NULL;
 }

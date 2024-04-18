@@ -21,8 +21,7 @@ void graphics::initSDL(){
         logErrorAndExit("SDL_mixer could not initialize!", Mix_GetError());
     }
     if (TTF_Init() == -1) {
-        logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ",
-                             TTF_GetError());
+        logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ", TTF_GetError());
     }
 
     this->loadMedia();    
@@ -41,32 +40,37 @@ void graphics::prepareScene(int status, int typeGame){
         this->renderTexture(gamePicture[EXIT_QUERRY], 627, 521); 
     }
     if (status == START_GAME){
-        mouse->getMousePos();
-        SDL_RenderCopy(renderer, gamePicture[START_BACK], NULL, NULL);
-        if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 362 && mouse->y < 362+77){
-            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 362);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
-        }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 445 && mouse->y < 445+77){
-            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 445);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
-        }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 522 && mouse->y < 522+77){
-            this->renderTexture(gamePicture[SELECT_MENU], 240+10, 522);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
-        }
-        else{
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);      
-            this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);       
-        }
-        this->renderTexture(gamePicture[ONE_PLAYER], 240, 362);
-        this->renderTexture(gamePicture[TWO_PLAYER], 240, 445);
-        this->renderTexture(gamePicture[QUIT], 240, 522);
+        renderStartMenu();
     }
 
     this->play(backgrounMusic);
+}
+
+void graphics::renderStartMenu(){
+    mouse->getMousePos();
+    SDL_RenderCopy(renderer, gamePicture[START_BACK], NULL, NULL);
+    if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 362 && mouse->y < 362+77){
+        this->renderTexture(gamePicture[SELECT_MENU], 240+10, 362);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
+    }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 445 && mouse->y < 445+77){
+        this->renderTexture(gamePicture[SELECT_MENU], 240+10, 445);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);
+    }else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 522 && mouse->y < 522+77){
+        this->renderTexture(gamePicture[SELECT_MENU], 240+10, 522);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);
+    }
+    else{
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 445);
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 362);      
+        this->renderTexture(gamePicture[UNSELECT_MENU], 240+10, 522);       
+    }
+    this->renderTexture(gamePicture[ONE_PLAYER], 240, 362);
+    this->renderTexture(gamePicture[TWO_PLAYER], 240, 445);
+    this->renderTexture(gamePicture[QUIT], 240, 522);
+    
 }
 
 void graphics::loadMedia(){
@@ -159,9 +163,6 @@ void graphics::play(Mix_Music* gMusic){
     if (Mix_PlayingMusic() == 0){
         Mix_PlayMusic(gMusic, -1);
     }
-    // else if (Mix_PausedMusic() == 1){
-    //     Mix_ResumeMusic();
-    // }
 }
 
 void graphics::play(Mix_Chunk* gChunk){
