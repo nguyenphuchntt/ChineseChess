@@ -10,4 +10,4 @@ endgame - image
 +Bình (sang ngang): (-) dấu ngang (P2-5 nghĩa là Pháo 2 sang ngang đến cột 5).
 
 
-
+// xóa bớt nút 

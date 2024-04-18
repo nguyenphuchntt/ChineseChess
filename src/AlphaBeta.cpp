@@ -1,5 +1,5 @@
 #include "../include/headers/logic.h"
-// alpha is the side that want to minimize the score
+// alpha is the side that want to maximize the score
 short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
     static short hdp;
     short value, best;
@@ -13,7 +13,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         if (best > alpha){
             alpha = best;
         }
-        // make a sample move
+        // make a move
         short from, dest, p;
         from = arMove[i].from;
         dest = arMove[i].dest;
@@ -36,7 +36,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
         }else{
             value = - AlphaBeta(-beta, -alpha, depth-1);
         }
-        // recover sample move
+        // undo move
 
         hdp--;
         ply--;

@@ -32,11 +32,10 @@ void graphics::prepareScene(int status, int typeGame){
     SDL_RenderClear(renderer);    
     if (status == RUNNING || status == WIN || status == LOSE || status == OVER || status == WAITING){
         SDL_RenderCopy(renderer, gamePicture[GAMEBOARD], NULL, NULL);  
-        this->renderTexture(gamePicture[HINT], 627, 364);
+        this->renderTexture(gamePicture[HINT], 627, 415);
         if (typeGame == PEOPLE){
-            this->renderTexture(gamePicture[DIAGONAL_LINE], 627,374);
+            this->renderTexture(gamePicture[DIAGONAL_LINE], 627, 420);
         }
-        this->renderTexture(gamePicture[UNDO], 623, 419);
         this->renderTexture(gamePicture[EXIT_QUERRY], 627, 521); 
     }
     if (status == START_GAME){

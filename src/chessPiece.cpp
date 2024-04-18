@@ -35,8 +35,8 @@ void ChessPiece::init(){
 
 
 ChessPiece::~ChessPiece(){
+    delete[] pieceColor;
     pieceColor = NULL;
-    // delete[] pieceColor;
+    delete[] piecePos;
     piecePos = NULL;
-    // delete[] piecePos;
 }

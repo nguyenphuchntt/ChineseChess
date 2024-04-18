@@ -68,7 +68,7 @@ void ChineseChess::getInput(){
             graphic->SwitchSoundStatus();
             sound_on = (sound_on == true) ? false : true;
         }
-        if (mouse->x > 627 && mouse->x < 627+49 && mouse->y > 364 && mouse->y < 364+52){
+        if (mouse->x > 627 && mouse->x < 627+49 && mouse->y > 415 && mouse->y < 415+52){
             getHint();
         }
         return;
@@ -231,8 +231,6 @@ bool ChineseChess::quit(){
     if (status != QUIT_GAME){
         return false;
     }
-    this->~ChineseChess();
-    this->piece->~ChessPiece();
     graphic->QuitSDL();
     return true;
 }
@@ -284,4 +282,8 @@ ChineseChess::~ChineseChess(){
 
     delete NewMove;
     NewMove = NULL;
+
+    this->piece = NULL;
+    this->graphic = NULL;
+    this->mouse = NULL;
 }
