@@ -30,7 +30,6 @@ void ChessPiece::init(){
         pieceColor[i] = color[i];
         piecePos[i] = pos[i];
     }
-
 }
 
 
