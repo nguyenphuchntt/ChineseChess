@@ -17,8 +17,8 @@ struct graphics{
     std::string pieceStepToRenderText[15] = {""};
     std::vector<SDL_Texture*> gameStep = {15, NULL};
 
-    SDL_Color RED = {255, 0, 0, 255};
-    SDL_Color BLACK = {0,0,0,255};
+    const SDL_Color RED = {255, 0, 0, 255};
+    const SDL_Color BLACK = {0,0,0,255};
 
     Mouse* mouse;
 

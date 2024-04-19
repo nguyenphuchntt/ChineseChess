@@ -1,4 +1,5 @@
 #include "../include/headers/logic.h"
+// minmax algorithm
 // alpha is the side that want to maximize the score
 short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
     static short hdp;
