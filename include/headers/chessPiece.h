@@ -98,9 +98,6 @@ struct ChessPiece{
     const short  Knightcheck[8] = { 1, -1, -9, -9, -1, 1, 9, 9 };
     const short  Elephancheck[8] = { -10, -8, 8, 10, 0, 0, 0, 0 };        
 
-
-
-
     ChessPiece(){
     }
     void init();

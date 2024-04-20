@@ -5,7 +5,7 @@ short ChineseChess::AlphaBeta(short alpha, short beta, short depth){
     static short hdp;
     short value, best;
     if (!depth){
-        short   iEval = iValuate();
+        short  iEval = iValuate();
         return iEval;           
     }
     this->gen();

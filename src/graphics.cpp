@@ -97,6 +97,8 @@ void graphics::loadMedia(){
     gamePicture.push_back(this->loadTexture("assets/img/music_pause.png"));
     gamePicture.push_back(this->loadTexture("assets/img/diagonalLine.png"));
 
+    explodeSprite = loadTexture("assets/img/explode.png");
+
     backgrounMusic = this->loadMusic("assets/audio/background_sound.wav");
 
     gameAudio.push_back(this->loadSound("assets/audio/kill_sound.wav"));
@@ -115,6 +117,9 @@ void graphics::freeMedia(){
         Mix_FreeChunk(gameAudio[i]);
         gameAudio[i] = NULL;
     }    
+
+    SDL_DestroyTexture(explodeSprite);
+
     Mix_FreeMusic(backgrounMusic);
     backgrounMusic = NULL;
     
@@ -256,6 +261,12 @@ void graphics::renderChessPiece(int n, const ChessPiece* chessPiece) {
         src.w = chessPiece->darkPos[chessPiece->piecePos[n]-1][2];
         src.h = chessPiece->darkPos[chessPiece->piecePos[n]-1][3];
     }
+    SDL_RenderCopy(renderer, chessPiece->texture, &src, &dst);
+}
+
+void graphics::renderSelectionPiece(const int& n, const ChessPiece* chessPiece){
+    int i = n / 9;
+    int j = n % 9;    
     if (n == chessPiece->Move.from && chessPiece->Move.from != NONE){
         SDL_Rect d;
         d.x = BOARD_X + j * CELL_SIZE_X - 32;
@@ -263,19 +274,36 @@ void graphics::renderChessPiece(int n, const ChessPiece* chessPiece) {
         d.w = 63;
         d.h = 63;
         SDL_RenderCopy(renderer, this->gamePicture[SELECT], NULL, &d);
-    }
-    // std::cout << "--" << src.x << " " << src.y << " " << src.w << " " << src.h;
-    // SDL_QueryTexture(chessPiece.texture, NULL, NULL, &dst.w, &dst.h);
-    SDL_RenderCopy(renderer, chessPiece->texture, &src, &dst);
-    // std::cout << std::endl;
+    }    
 }
 
 void graphics::displayChessPiece(const ChessPiece* chessPiece){
     for (int n = 0; n < 90; n++){
         if ((chessPiece->pieceColor[n] == LIGHT) || (chessPiece->pieceColor[n] == DARK)){
-            renderChessPiece(n, chessPiece);       
+            renderChessPiece(n, chessPiece);     
+            renderSelectionPiece(n, chessPiece);  
         }
     }
+}
+
+void graphics::displayChessPieceExcept(const ChessPiece* chessPiece, int dest){
+    for (int n = 0; n < 90; n++){
+        if (n == dest) continue;
+        if ((chessPiece->pieceColor[n] == LIGHT) || (chessPiece->pieceColor[n] == DARK)){
+            renderChessPiece(n, chessPiece);       
+        }
+    }    
+}
+
+void graphics::renderPieceExplode(int x, int y, Sprite* sprite, bool& exploding){
+    const SDL_Rect* frame = sprite->getCurrFrame();
+    SDL_Rect rect = {x, y, frame->w, frame->h};
+    SDL_RenderCopy(renderer, sprite->texture, frame, &rect);
+    if (sprite->currFrame == EXPLODEPIECE_FRAMES-1){
+        sprite->currFrame = 0;
+        exploding = false;
+    }
+    sprite->tick();
 }
 
 void graphics::renderExit(bool exitQuerry){

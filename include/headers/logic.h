@@ -6,6 +6,7 @@
 #include "graphics.h"
 #include "mouse.h"
 #include "move.h"
+#include "sprite.h"
 
 struct ChineseChess{
 
@@ -34,6 +35,11 @@ struct ChineseChess{
     short depth;
 
     short alpha, beta;
+
+    Sprite* explodeSprite; bool exploding = false;
+    int explode_x = 0;
+    int explode_y = 0;
+    int explode_pos = 0;
 
     void InitData();
     void init();

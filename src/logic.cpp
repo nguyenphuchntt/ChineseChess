@@ -40,6 +40,7 @@ void ChineseChess::init(){
     sound_on = true;
     InitData();
     graphic->initSDL();
+    explodeSprite->initSprite(graphic->explodeSprite, EXPLODEPIECE_FRAMES, EXPLODEPIECE_CLIPS);
     piece->init();
     piece->texture = graphic->gamePicture[CHESSPIECE];
 }
@@ -157,6 +158,10 @@ bool ChineseChess::move(int from, int dest){
             graphic->play(graphic->gameAudio[MOVE_SOUND]);
         }else{
             graphic->play(graphic->gameAudio[KILL_SOUND]);
+            exploding = true;
+            explode_x = BOARD_X + (dest % 9) * CELL_SIZE_X - 30;
+            explode_y = BOARD_Y + (dest / 9) * CELL_SIZE_Y  - 30;   
+            explode_pos = dest;
         }
 
         graphic->MoveToText(from, dest, piece->piecePos[from], turn);
@@ -258,7 +263,13 @@ void ChineseChess::processMove(){
 
 void ChineseChess::render(){
     if (status == RUNNING || status == WIN || status == LOSE || status == WAITING){
-        graphic->displayChessPiece(piece);  
+        if (!exploding){
+            graphic->displayChessPiece(piece); 
+        }  
+        else{    
+            graphic->displayChessPieceExcept(piece, explode_pos);
+            graphic->renderPieceExplode(explode_x, explode_y-15, explodeSprite, exploding);    
+        }
         graphic->renderTurnSquare(status, turn);
         graphic->renderExit(exitQuerry);
         graphic->renderSoundButton(status, sound_on);
@@ -266,9 +277,6 @@ void ChineseChess::render(){
         if (status == WIN || status == LOSE){
             graphic->renderOverPopUp(status);
         }
-        // if (status == WAITING || status == WIN || status == LOSE){
-        //     this->exitGame();
-        // }
     }
     SDL_RenderPresent(graphic->renderer);
 }

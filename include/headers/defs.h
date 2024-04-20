@@ -29,6 +29,7 @@
 #define WAITING 3
 #define START_GAME 5
 #define QUIT_GAME 4
+#define WAITFOREXPLODE 6
 #define WIN 1
 #define LOSE -1
 #define OVER 0
@@ -41,4 +42,16 @@
 
 #define DEPTH 5
 
+const int EXPLODEPIECE_CLIPS[][4] = {
+    {3,0,60,65},
+    {68,0,60,65},
+    {131,0,60,65},
+    {193,0,60,65},
+    {257,0,60,65},
+    {322,0,60,65},
+    {386,0,60,65},
+    {451,0,60,65},
+    {516,0,60,65}
+};
+const int EXPLODEPIECE_FRAMES = sizeof(EXPLODEPIECE_CLIPS) / sizeof(int) / 4;
 #endif

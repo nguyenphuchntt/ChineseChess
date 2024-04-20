@@ -6,6 +6,7 @@
 #include "chessPiece.h"
 #include "exception.h"
 #include "mouse.h"
+#include "sprite.h"
 struct graphics{
     SDL_Window* window = NULL; 
     SDL_Renderer* renderer = NULL;
@@ -16,6 +17,7 @@ struct graphics{
     std::vector<Mix_Chunk*> gameAudio;
     std::string pieceStepToRenderText[15] = {""};
     std::vector<SDL_Texture*> gameStep = {15, NULL};
+    SDL_Texture* explodeSprite = NULL;
 
     const SDL_Color RED = {255, 0, 0, 255};
     const SDL_Color BLACK = {0,0,0,255};
@@ -42,12 +44,15 @@ struct graphics{
     SDL_Texture* renderText(const char* text, TTF_Font* font, SDL_Color textColor);
     void renderTexture(SDL_Texture* texture, int x, int y);
     void renderExit(bool exitQuerry);
+    void renderSelectionPiece(const int& n, const ChessPiece* chessPiece);
     void renderTurnSquare(int status, int turn);
     void renderSoundButton(int gameStatus, bool soundStatus);
     void renderHintButton(int gameStatus);
     void renderUndoButton(int gameStatus);
     void renderOverPopUp(int gameStatus);
     void renderStartMenu();
+
+    void renderPieceExplode(int x, int y, Sprite* sprite, bool& exploding);
 
     void MoveToText(int from, int dest, int pieceType, int side);
     void displayText();
@@ -56,6 +61,7 @@ struct graphics{
 
     void renderChessPiece(int n, const ChessPiece* chessPiece);
     void displayChessPiece(const ChessPiece* chessPiece);
+    void displayChessPieceExcept(const ChessPiece* chessPiece,int dest);
 };
 
 #endif

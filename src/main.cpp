@@ -4,6 +4,7 @@ Mouse gMouse;
 graphics gGraphic;
 ChessPiece gPiece;
 ChineseChess game;
+Sprite explodeSprite;
 
 int main(int arg, char* argv[]){
     
@@ -11,6 +12,7 @@ int main(int arg, char* argv[]){
     game.piece = &gPiece;
     game.mouse = &gMouse;
     gGraphic.mouse = &gMouse;
+    game.explodeSprite = &explodeSprite;
     game.init();
     
     SDL_Event event;
@@ -33,6 +35,7 @@ int main(int arg, char* argv[]){
                 game.processClick();
             }
         }
+        // game.graphic->renderPieceExplode(50, 50, game.explodeSprite, game.status);
         game.render();
         // std::cout << game.status << std::endl;
         if (game.quit()) break;
