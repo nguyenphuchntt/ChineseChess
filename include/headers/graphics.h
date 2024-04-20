@@ -60,8 +60,9 @@ struct graphics{
     void QuitSDL();
 
     void renderChessPiece(int n, const ChessPiece* chessPiece);
+    void renderChessPiece(int from, int PieceType, int PieceColor, const ChessPiece* chessPiece);
     void displayChessPiece(const ChessPiece* chessPiece);
-    void displayChessPieceExcept(const ChessPiece* chessPiece,int dest);
+    void displayChessPieceExplode(const ChessPiece* chessPiece, int from, int dest, int pieceType, int pieceColor);
 };
 
 #endif

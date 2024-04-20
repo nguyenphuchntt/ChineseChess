@@ -277,6 +277,30 @@ void graphics::renderSelectionPiece(const int& n, const ChessPiece* chessPiece){
     }    
 }
 
+void graphics::renderChessPiece(int n, int PieceType, int pieceColor, const ChessPiece* chessPiece){
+    int i = n / 9;
+    int j = n % 9;
+    SDL_Rect dst;
+    dst.x = BOARD_X + j * CELL_SIZE_X - 30;
+    dst.y = BOARD_Y + i * CELL_SIZE_Y  - 30;
+    dst.w = 60;
+    dst.h = 60;
+    SDL_Rect src;
+    if (pieceColor == LIGHT){
+        src.x = chessPiece->lightPos[PieceType - 1][0];
+        src.y = chessPiece->lightPos[PieceType - 1][1];
+        src.w = chessPiece->lightPos[PieceType - 1][2];
+        src.h = chessPiece->lightPos[PieceType - 1][3];
+    }
+    else {
+        src.x = chessPiece->darkPos[PieceType - 1][0];
+        src.y = chessPiece->darkPos[PieceType - 1][1];
+        src.w = chessPiece->darkPos[PieceType - 1][2];
+        src.h = chessPiece->darkPos[PieceType - 1][3];
+    }
+    SDL_RenderCopy(renderer, chessPiece->texture, &src, &dst);
+}
+
 void graphics::displayChessPiece(const ChessPiece* chessPiece){
     for (int n = 0; n < 90; n++){
         if ((chessPiece->pieceColor[n] == LIGHT) || (chessPiece->pieceColor[n] == DARK)){
@@ -286,13 +310,14 @@ void graphics::displayChessPiece(const ChessPiece* chessPiece){
     }
 }
 
-void graphics::displayChessPieceExcept(const ChessPiece* chessPiece, int dest){
+void graphics::displayChessPieceExplode(const ChessPiece* chessPiece, int from, int dest, int pieceType, int pieceColor){
     for (int n = 0; n < 90; n++){
         if (n == dest) continue;
         if ((chessPiece->pieceColor[n] == LIGHT) || (chessPiece->pieceColor[n] == DARK)){
             renderChessPiece(n, chessPiece);       
         }
-    }    
+    }   
+    renderChessPiece(from, pieceType, pieceColor, chessPiece); 
 }
 
 void graphics::renderPieceExplode(int x, int y, Sprite* sprite, bool& exploding){

@@ -161,7 +161,10 @@ bool ChineseChess::move(int from, int dest){
             exploding = true;
             explode_x = BOARD_X + (dest % 9) * CELL_SIZE_X - 30;
             explode_y = BOARD_Y + (dest / 9) * CELL_SIZE_Y  - 30;   
-            explode_pos = dest;
+            explode_from = from;
+            explode_dest = dest;
+            from_type = piece->piecePos[from];
+            from_color = piece->pieceColor[from];
         }
 
         graphic->MoveToText(from, dest, piece->piecePos[from], turn);
@@ -267,7 +270,7 @@ void ChineseChess::render(){
             graphic->displayChessPiece(piece); 
         }  
         else{    
-            graphic->displayChessPieceExcept(piece, explode_pos);
+            graphic->displayChessPieceExplode(piece, explode_from, explode_dest, from_type, from_color);
             graphic->renderPieceExplode(explode_x, explode_y-15, explodeSprite, exploding);    
         }
         graphic->renderTurnSquare(status, turn);

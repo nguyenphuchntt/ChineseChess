@@ -39,7 +39,10 @@ struct ChineseChess{
     Sprite* explodeSprite; bool exploding = false;
     int explode_x = 0;
     int explode_y = 0;
-    int explode_pos = 0;
+    int explode_from = 0;
+    int explode_dest = 0;
+    int from_type = 0;
+    int from_color = 0;
 
     void InitData();
     void init();
