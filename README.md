@@ -1,3 +1,5 @@
+BỔ SUNG (20/04/24): Khi quân cờ nào đó bị ăn thì sẽ hiện hoạt ảnh phát nổ tại vị trí đó, rồi sau đó quân cờ mới sẽ được chuyển tới vị trí mà quân đã bị ăn
+
 1. Thông tin sinh viên:
 Họ và tên: Nguyễn Văn Phúc
 Mã sinh viên 23021664
