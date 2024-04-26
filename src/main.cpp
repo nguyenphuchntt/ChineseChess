@@ -16,7 +16,7 @@ int main(int arg, char* argv[]){
     game.init();
     
     SDL_Event event;
-    while (1){
+    while (!(game.status == QUIT_GAME)){
         game.graphic->prepareScene(game.status, game.gameType);
         if (game.turn == DARK){
             game.processMove();
@@ -35,10 +35,8 @@ int main(int arg, char* argv[]){
                 game.processClick();
             }
         }
-        // game.graphic->renderPieceExplode(50, 50, game.explodeSprite, game.status);
         game.render();
-        // std::cout << game.status << std::endl;
-        if (game.quit()) break;
     }
+    game.quit();
     return 0;
 }

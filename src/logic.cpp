@@ -84,7 +84,6 @@ void ChineseChess::processMenu(){
     mouse->getMousePos();
     if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 522 && mouse->y < 522+77){
         status = QUIT_GAME;
-        quit();
     }
     else if (mouse->x > 240 && mouse->x < 240+228 && mouse->y > 362 && mouse->y < 362+77){
         status = RUNNING;
@@ -240,6 +239,7 @@ bool ChineseChess::quit(){
         return false;
     }
     graphic->QuitSDL();
+    std::cout << "graphics cleaned" << std::endl;
     return true;
 }
 
@@ -285,16 +285,22 @@ void ChineseChess::render(){
 }
 
 ChineseChess::~ChineseChess(){
+    // std::cout << "1111111111111111";
+    delete[] gen_begin;
+    gen_begin = NULL;
+
+    delete[] gen_end;
+    gen_end = NULL;    
     delete[] arMove;
     arMove = NULL;
 
     delete[] MoveData;
     MoveData = NULL;
 
-    delete NewMove;
-    NewMove = NULL;
-
+    // std::cout << "22222222";
     this->piece = NULL;
     this->graphic = NULL;
     this->mouse = NULL;
+    this->explodeSprite = NULL;
+    std::cout << "game cleaned!" << std::endl;
 }

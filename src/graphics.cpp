@@ -233,6 +233,8 @@ void graphics::QuitSDL(){
     renderer = NULL;
     window = NULL;
 
+    this->mouse = NULL;
+    
     TTF_Quit();
     Mix_Quit();
     IMG_Quit();

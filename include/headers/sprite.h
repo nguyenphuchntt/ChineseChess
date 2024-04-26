@@ -15,6 +15,7 @@ struct Sprite{
     void initSprite(SDL_Texture* _texture, int frames, const int _clips[][4]);
     void tick();
     const SDL_Rect* getCurrFrame();
+    ~Sprite();
 };
 
 #endif //_SPRITE__H

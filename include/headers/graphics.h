@@ -26,6 +26,9 @@ struct graphics{
 
     graphics(){
     }
+    ~graphics(){
+        
+    }
 
     void initSDL();
     void prepareScene(int type, int typeGame);

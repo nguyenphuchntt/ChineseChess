@@ -15,11 +15,16 @@ void Sprite::initSprite(SDL_Texture* _texture, int frames, const int _clips[][4]
 }
 void Sprite::tick(){
     temp++;
-    if (temp % 5 == 0) {
+    if (temp % 3 == 0) {
         currFrame = (currFrame + 1) % clips.size();
     }
 }
 
 const SDL_Rect* Sprite::getCurrFrame(){
     return &(clips[currFrame]);
+}
+
+Sprite::~Sprite(){
+    texture = NULL;
+    std::cout << "sprite cleaned!" << std::endl;
 }
