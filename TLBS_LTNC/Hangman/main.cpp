@@ -9,7 +9,7 @@
 #define MAX_BAD_GUESSES 7
 
 const std::string WORD_LIST[] = {
-        "angle", "ant", "apple", "arch", "arm", "army",
+        "angle", "ant", "apple", "arm", "army",
         "baby", "bag", "ball", "band", "basin", "basket", "bath", "bed", "bee", "bell", "berry",
         "bird", "blade", "board", "boat", "bone", "book", "boot", "bottle", "box", "boy",
         "brain", "brake", "branch", "brick", "bridge", "brush", "bucket", "bulb", "button",
